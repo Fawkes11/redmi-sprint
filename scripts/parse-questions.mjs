@@ -1,7 +1,7 @@
 // Convierte el Excel del cliente a src/data/questions.json en build time.
 // La respuesta correcta viene marcada en el Excel con relleno amarillo (#FFF258).
 import ExcelJS from 'exceljs'
-import { writeFile } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 
 const SOURCE = new URL('../Questions REDMI Note 17 Series.xlsx', import.meta.url)
 const OUTPUT = new URL('../src/data/questions.json', import.meta.url)
@@ -48,6 +48,7 @@ sheet.eachRow((row, rowNumber) => {
   questions.push({ id, question, options, correct: marked.length === 1 ? marked[0] : null })
 })
 
+await mkdir(new URL('.', OUTPUT), { recursive: true })
 await writeFile(OUTPUT, JSON.stringify(questions, null, 2) + '\n')
 
 const playable = questions.filter((q) => q.correct).length
