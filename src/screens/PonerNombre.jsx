@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import BrandButton from '../components/BrandButton.jsx'
+import VerticalLines from '../components/VerticalLines.jsx'
 import Icon from '../components/Icon.jsx'
 import arrowBack from '@material-symbols/svg-200/outlined/arrow_back.svg?raw'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
-import lines from '../assets/decor/vertical-lines-2.svg'
 // Recorte visible (1080×645) de la imagen de Figma de 1245×1075 en X -150, Y 1275
 import phone from '../assets/devices/mobile-3-screen.png'
 
@@ -18,9 +18,9 @@ export default function PonerNombre({ onBack, onContinue }) {
   }
 
   return (
-    <div className="absolute inset-0 overflow-hidden bg-brand-gradient">
-      {/* Líneas verticales: grupo de 980×1957 en X 50, Y -939 (el SVG incluye el margen del desenfoque) */}
-      <img src={lines} alt="" className="absolute left-[24px] top-0 max-w-none" />
+    <div className="absolute inset-0 overflow-hidden bg-brand-gradient-v">
+      {/* Líneas verticales (grupo de 980×1957 en X 50, Y -939), detrás de todo */}
+      <VerticalLines x={50} y={-939} />
 
       <button
         type="button"

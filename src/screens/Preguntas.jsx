@@ -1,4 +1,5 @@
 import AnswerOption from '../components/AnswerOption.jsx'
+import FitText from '../components/FitText.jsx'
 import Timer from '../components/Timer.jsx'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
 import lines from '../assets/decor/vertical-lines-2.svg'
@@ -11,6 +12,17 @@ const FEEDBACK = {
 }
 
 const formatScore = (score) => String(score).padStart(6, '0')
+
+// Pregunta: borde inferior fijo donde lo tiene Figma (Y 835, sobre el móvil) y crece hacia arriba
+// hasta Y 710 (debajo del temporizador). Solo si aun así no cabe, reduce el tamaño desde 36px.
+const QUESTION_BOTTOM = 835
+const QUESTION_MAX_HEIGHT = QUESTION_BOTTOM - 710
+const questionFits = (el) => el.scrollHeight <= QUESTION_MAX_HEIGHT
+
+// Nombre en la tarjeta de puntaje: 96px, se reduce para que quepan nombres de 8–9 letras
+// dentro del círculo naranja; más largos se recortan con "…" al llegar al mínimo.
+const NAME_MAX_WIDTH = 400
+const nameFits = (el) => el.scrollWidth <= el.clientWidth
 
 // 04 — Inicio de preguntas (Figma 514:323). Solo presentación: la lógica vive en App (Fase 3).
 export default function Preguntas({
@@ -44,11 +56,17 @@ export default function Preguntas({
 
       <Timer timeLeft={timeLeft} total={totalTime} className="absolute left-1/2 top-[456px] -translate-x-1/2" />
 
-      <p className="absolute left-[72px] top-[765px] w-[936px] text-center text-[36px] font-semibold leading-none text-ink-soft">
+      <FitText
+        max={36}
+        min={20}
+        fits={questionFits}
+        className="absolute left-[72px] block w-[936px] text-center font-semibold leading-none text-ink-soft"
+        style={{ bottom: 1920 - QUESTION_BOTTOM }}
+      >
         {question.question}
-      </p>
+      </FitText>
 
-      <div className="absolute left-[73px] top-[958px] flex flex-col gap-[50px]">
+      <div className="absolute left-[72px] top-[958px] flex flex-col gap-[50px]">
         {question.options.map((option) => (
           <AnswerOption
             key={option.key}
@@ -74,7 +92,15 @@ export default function Preguntas({
       )}
 
       <div className="absolute inset-x-0 top-[1745px] flex h-[109.5px] items-center justify-center gap-[24px] text-paper-white">
-        <span className="max-w-[520px] truncate text-[96px] font-bold leading-none">{playerName}</span>
+        <FitText
+          max={96}
+          min={48}
+          fits={nameFits}
+          className="block truncate font-bold leading-none"
+          style={{ maxWidth: NAME_MAX_WIDTH }}
+        >
+          {playerName}
+        </FitText>
         <span className="h-[109px] w-[4px] bg-paper-white" />
         <span className="flex flex-col">
           <span className="text-[36px] font-light leading-none">TU PUNTAJE</span>

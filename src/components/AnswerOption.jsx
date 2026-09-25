@@ -10,13 +10,13 @@ export default function AnswerOption({ letter, text, selected, onSelect }) {
         {text}
       </span>
       <span
-        className={`relative flex size-[100px] items-center justify-center rounded-[20px] ${
-          selected ? 'bg-paper-white' : 'bg-brand-gradient'
+        className={`relative flex w-[100px] h-full items-center justify-center rounded-[20px] ${
+          selected ? 'bg-paper-white shadow-answer' : 'bg-brand-gradient'
         }`}
       >
         <span
           className={`text-[48px] font-bold leading-none ${
-            selected ? 'bg-brand-gradient bg-clip-text text-transparent' : 'text-paper-white'
+            selected ? 'bg-brand-gradient bg-clip-text text-transparent ' : 'text-paper-white'
           }`}
         >
           {letter}

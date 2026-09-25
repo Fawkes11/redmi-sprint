@@ -4,6 +4,7 @@ import Inicio from './screens/Inicio.jsx'
 import Tutorial from './screens/Tutorial.jsx'
 import PonerNombre from './screens/PonerNombre.jsx'
 import Preguntas from './screens/Preguntas.jsx'
+import Resultados from './screens/Resultados.jsx'
 import questions from './data/questions.json'
 
 // Flujo de 5 pantallas manejado por estado interno (sin rutas).
@@ -14,6 +15,9 @@ const devModules = import.meta.env.DEV ? import.meta.glob('./dev/*.{js,jsx}', { 
 const PendingFigma = devModules['./dev/PendingFigma.jsx']?.default
 const devParams = devModules['./dev/preview.js']?.default ?? new URLSearchParams()
 const initialScreen = devParams.get('screen') || 'inicio'
+
+// Ranking de ejemplo hasta conectar la persistencia (Fase 3); más de 7 para mostrar "Mostrar más"
+const PREVIEW_RANKING = Array.from({ length: 12 }, (_, i) => ({ id: i + 1, name: `Nombre ${i + 1}`, correct: 5, score: 0 }))
 
 export default function App() {
   const [screen, setScreen] = useState(initialScreen)
@@ -47,15 +51,20 @@ export default function App() {
             timeLeft={Number(devParams.get('time') ?? 90)}
             totalTime={90}
             feedback={devParams.get('feedback')}
-            playerName={playerName || 'AAA'}
+            playerName={playerName || devParams.get('name') || 'AAA'}
             score={0}
           />
         )}
         {screen === 'resultados' && (
-          // Placeholder hasta maquetar la pantalla 05
-          <button type="button" onClick={next} className="absolute inset-0 text-6xl font-bold text-ink">
-            {screen} {playerName}
-          </button>
+          <Resultados
+            playerName={playerName || devParams.get('name') || 'Nombre 1'}
+            score={0}
+            correct={5}
+            total={questions.length}
+            ranking={PREVIEW_RANKING}
+            onFinish={() => go('inicio')}
+            initialExpanded={devParams.has('expanded')}
+          />
         )}
       </Stage>
       {PendingFigma && <PendingFigma />}

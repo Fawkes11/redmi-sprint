@@ -7,7 +7,7 @@ import trophy from '@material-symbols/svg-200/outlined/trophy.svg?raw'
 import BrandButton from '../components/BrandButton.jsx'
 import lines from '../assets/decor/vertical-lines.svg'
 
-// Pasos del tutorial. Copy adaptado a modo individual (pendiente de confirmar en PENDIENTES-FIGMA.md).
+// Pasos del tutorial, adaptados a modo individual.
 const STEPS = [
   { icon: editSquare, title: 'Regístrate', text: 'Ingresa tu nombre' },
   { icon: visibility, title: 'Atento', text: 'Lee la pregunta en pantalla.' },
@@ -44,10 +44,10 @@ export default function Tutorial({ onContinue }) {
       <ol className="absolute left-1/2 top-[765px] flex h-[614px] w-[769px] -translate-x-1/2 flex-col justify-between">
         {STEPS.map((step) => (
           <li key={step.title} className="flex items-center gap-[25px]">
-            <span className="flex size-[98px] shrink-0 items-center justify-center rounded-[18px] border-2 border-brand-orange text-brand-orange">
+            <span className="flex size-[100px] shrink-0 items-center justify-center rounded-[20px] border-brand-gradient text-brand-orange">
               <Icon svg={step.icon} size={52} />
             </span>
-            <div className="text-[30px] leading-tight text-ink-soft">
+            <div className="text-[32px] leading-tight text-ink-soft">
               <p className="font-bold">{step.title}</p>
               {step.text && <p className="font-light">{step.text}</p>}
             </div>
