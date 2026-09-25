@@ -61,7 +61,7 @@ export default function Preguntas({
       <img draggable={false} src={xiaomiLogo} alt="Xiaomi" className="absolute left-1/2 top-[64px] size-[122.65px] max-w-none -translate-x-1/2" />
 
       <div className="absolute left-1/2 top-[281px] flex h-[103px] w-[468px] -translate-x-1/2 items-center justify-center rounded-full bg-brand-gradient text-[48px] font-bold leading-none text-paper-white">
-        Pregunta {number}/{total}
+        Pregunta {number}
       </div>
 
       <Timer timeLeftMs={timeLeftMs} totalMs={totalMs} className="absolute left-1/2 top-[456px] -translate-x-1/2" />
