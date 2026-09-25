@@ -1,0 +1,9 @@
+node_modules
+dist
+
+# Solo local: herramientas de depuración y pendientes internos de Figma
+src/dev/
+PENDIENTES-FIGMA.md
+
+# Se genera desde el Excel en cada build (npm run questions)
+src/data/questions.json

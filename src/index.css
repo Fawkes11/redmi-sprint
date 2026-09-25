@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+
+/* Tokens tomados de Figma (secciones "Colores", "Gradient" y "Fuentes"). */
+@theme {
+  --color-brand-orange: #ff6900;
+  /* extremos del gradiente de Figma */
+  --color-brand-orange-deep: #eb641c;
+  --color-brand-orange-light: #f5a746;
+  /* texto "No te rindas" (pantalla 04) */
+  --color-danger-from: #eb1c1f;
+  --color-danger-to: #f54646;
+  --color-ink: #000000;
+  --color-ink-soft: #444444;
+  --color-paper: #fafafa;
+  --color-paper-white: #ffffff;
+
+  /* @font-face más abajo (archivos en src/assets/fonts/misans-latin/) */
+  --font-misans: 'MiSans Latin', system-ui, sans-serif;
+
+  /* Drop shadows de Figma */
+  --shadow-soft: 0 0 77.7px rgba(0, 0, 0, 0.05); /* círculos pantallas 02 y 03 */
+  --shadow-strong: 0 0 191.8px rgba(0, 0, 0, 0.1); /* círculo 2 pantalla 02 */
+  --shadow-soft-sm: 0 0 50px rgba(0, 0, 0, 0.05); /* círculo blanco pantalla 04 */
+  --shadow-answer: 0 0 16px rgba(0, 0, 0, 0.15); /* cajas de respuesta pantalla 04 */
+}
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(90deg, var(--color-brand-orange-deep) 0%, var(--color-brand-orange-light) 100%);
+}
+
+@utility bg-danger-gradient {
+  background-image: linear-gradient(90deg, var(--color-danger-from) 0%, var(--color-danger-to) 100%);
+}
+
+/* MiSans Latin (Fuentes de Figma). Los pesos internos del archivo no son estándar,
+   así que se asignan por nombre para que coincidan con las clases de Tailwind. */
+@font-face {
+  font-family: 'MiSans Latin';
+  src: url('./assets/fonts/misans-latin/misans-latin-light.otf') format('opentype');
+  font-weight: 300;
+  font-display: block;
+}
+@font-face {
+  font-family: 'MiSans Latin';
+  src: url('./assets/fonts/misans-latin/misans-latin-regular.otf') format('opentype');
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: 'MiSans Latin';
+  src: url('./assets/fonts/misans-latin/misans-latin-medium.otf') format('opentype');
+  font-weight: 500;
+  font-display: block;
+}
+@font-face {
+  font-family: 'MiSans Latin';
+  src: url('./assets/fonts/misans-latin/misans-latin-semibold.otf') format('opentype');
+  font-weight: 600;
+  font-display: block;
+}
+@font-face {
+  font-family: 'MiSans Latin';
+  src: url('./assets/fonts/misans-latin/misans-latin-bold.otf') format('opentype');
+  font-weight: 700;
+  font-display: block;
+}
+@font-face {
+  font-family: 'MiSans Latin';
+  src: url('./assets/fonts/misans-latin/misans-latin-heavy.otf') format('opentype');
+  font-weight: 900;
+  font-display: block;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #000000;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}

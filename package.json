@@ -1,0 +1,27 @@
+{
+  "name": "kiosko-trivia-xiaomi",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "questions": "node scripts/parse-questions.mjs",
+    "predev": "npm run questions",
+    "dev": "vite",
+    "prebuild": "npm run questions",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@material-symbols/svg-200": "^0.47.5",
+    "gsap": "^3.15.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "exceljs": "^4.4.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.1"
+  }
+}
