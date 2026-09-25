@@ -9,15 +9,16 @@ export default function Inicio({ onStart }) {
   return (
     <div className="absolute inset-0 bg-paper">
       {/* Líneas decorativas (detrás de todo): arriba rotadas 180°, abajo sin rotar */}
-      <img src={lines} alt="" className="absolute left-[22px] top-[-1299px] max-w-none rotate-180" />
-      <img src={lines} alt="" className="absolute left-[23px] top-[830px] max-w-none" />
+      <img draggable={false} src={lines} alt="" className="absolute left-[22px] top-[-1299px] max-w-none rotate-180" />
+      <img draggable={false} src={lines} alt="" className="absolute left-[23px] top-[830px] max-w-none" />
 
       {/* Semicírculo con gradiente de marca detrás de los teléfonos */}
       <div className="absolute left-[-67px] top-[1544px] size-[1214px] rounded-full bg-brand-gradient" />
-      <img src={phones} alt="" className="absolute left-[201px] top-[1332px] max-w-none" />
+      <img draggable={false} src={phones} alt="" className="absolute left-[201px] top-[1332px] max-w-none" />
 
-      <img src={xiaomiLogo} alt="Xiaomi" className="absolute left-[437px] top-[284px] max-w-none" />
+      <img draggable={false} src={xiaomiLogo} alt="Xiaomi" className="absolute left-[437px] top-[284px] max-w-none" />
       <img
+        draggable={false}
         src={redmiNote17}
         alt="REDMI Note 17 Series — Batería Máx. Energía Máx."
         className="absolute left-[153px] top-[603px] max-w-none"

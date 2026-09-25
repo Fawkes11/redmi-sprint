@@ -35,18 +35,21 @@ function RankingRow({ entry, index, total }) {
       {/* Centros de columna tomados de Figma, relativos a la tabla */}
       <span className="absolute left-[77px] top-1/2 -translate-x-1/2 -translate-y-1/2 text-[36px]">{index + 1}</span>
       <span className="absolute left-[139px] top-1/2 h-[40px] w-[2px] -translate-y-1/2 bg-brand-orange" />
-      <span className="absolute left-[275px] top-1/2 max-w-[250px] -translate-x-1/2 -translate-y-1/2 truncate">{entry.name}</span>
+      {/* `truncate` recorta: el padding vertical da espacio a g, j, p, y (sigue centrado por el translate) */}
+      <span className="absolute left-[275px] top-1/2 max-w-[220px] -translate-x-1/2 -translate-y-1/2 truncate py-[0.2em]">
+        {entry.name}
+      </span>
       <span className="absolute left-[430px] top-1/2 -translate-x-1/2 -translate-y-1/2">
-        {entry.correct}/{total}
+        {entry.answered}/{total}
       </span>
       <span className="absolute left-[570px] top-1/2 -translate-x-1/2 -translate-y-1/2">{formatScore(entry.score)}</span>
 
       {index < MEDALS.length && (
-        <img src={MEDALS[index]} alt="" className="absolute left-[-53px] top-1/2 h-[37.7px] w-[48px] max-w-none -translate-y-1/2" />
+        <img draggable={false} src={MEDALS[index]} alt="" className="absolute left-[-53px] top-1/2 h-[37.7px] w-[48px] max-w-none -translate-y-1/2" />
       )}
       {index === 0 && (
         <span className="absolute left-[687px] top-0 flex h-[66px] w-[165px] items-center gap-[3px] rounded-r-[10px] bg-ink-soft pl-[9px]">
-          <img src={trophy} alt="" className="h-[40px] w-[43px] max-w-none" />
+          <img draggable={false} src={trophy} alt="" className="h-[40px] w-[43px] max-w-none" />
           <span className="bg-brand-gradient-v bg-clip-text text-[24px] font-bold text-transparent">MASTER</span>
         </span>
       )}
@@ -83,9 +86,9 @@ function Ranking({ entries, total, expanded }) {
   )
 }
 
-// 05 — Resultados (Figma 515:1132). Solo presentación: los datos llegan desde App (Fase 3).
-export default function Resultados({ playerName, score, correct, total, ranking, onFinish, initialExpanded = false }) {
-  const [expanded, setExpanded] = useState(initialExpanded)
+// 05 — Resultados (Figma 515:1132). "RESPUESTAS" cuenta todas las respuestas dadas.
+export default function Resultados({ playerName, score, answered, total, ranking, onFinish }) {
+  const [expanded, setExpanded] = useState(false)
   const canExpand = ranking.length > VISIBLE_ROWS
 
   return (
@@ -93,9 +96,9 @@ export default function Resultados({ playerName, score, correct, total, ranking,
       {/* Círculos superiores: el grande al fondo y el pequeño encima */}
       <div className="absolute left-[-291px] top-[-1174px] size-[1688px] rounded-full bg-ink-soft" />
       <div className="absolute left-[-141px] top-[-1072px] size-[1362px] rounded-full bg-ink-soft shadow-deep" />
-      <img src={phone} alt="" className="absolute left-0 top-[23px] max-w-none" />
+      <img draggable={false} src={phone} alt="" className="absolute left-0 top-[23px] max-w-none" />
 
-      <img src={xiaomiLogo} alt="Xiaomi" className="absolute left-[474.15px] top-[323px] size-[131px] max-w-none" />
+      <img draggable={false} src={xiaomiLogo} alt="Xiaomi" className="absolute left-[474.15px] top-[323px] size-[131px] max-w-none" />
 
       <div className="absolute inset-x-0 top-[548px] flex flex-col items-center text-paper-white">
         <p className="text-[64px] font-bold leading-none">RESULTADOS</p>
@@ -105,7 +108,7 @@ export default function Resultados({ playerName, score, correct, total, ranking,
 
       {[
         { label: 'PUNTAJE', value: formatScore(score), left: 227 },
-        { label: 'RESPUESTAS', value: `${correct}/${total}`, left: 545 },
+        { label: 'RESPUESTAS', value: `${answered}/${total}`, left: 545 },
       ].map((stat) => (
         <div key={stat.label} className="absolute top-[809px] flex w-[308px] flex-col items-center" style={{ left: stat.left }}>
           <p className="text-[40px] font-bold leading-none text-paper-white">{stat.label}</p>

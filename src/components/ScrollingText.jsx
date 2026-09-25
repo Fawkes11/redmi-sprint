@@ -28,7 +28,9 @@ export default function ScrollingText({ children, className = '' }) {
   }, [children])
 
   return (
-    <div ref={box} onClick={play} className={`w-fit overflow-hidden ${className}`}>
+    // overflow-x: clip recorta solo a los lados; con overflow-hidden (o -x-hidden) también se
+    // cortarían las letras con descendentes (g, j, p) por el line-height ajustado
+    <div ref={box} onClick={play} className={`w-fit overflow-x-clip ${className}`}>
       <span ref={text} className="inline-block whitespace-nowrap">
         {children}
       </span>

@@ -7,8 +7,9 @@ const RING = 13
 
 const format = (seconds) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`
 
-export default function Timer({ timeLeft, total, className = '' }) {
-  const progress = total > 0 ? timeLeft / total : 0
+// timeLeftMs / totalMs en milisegundos: el anillo avanza de forma continua y el texto muestra segundos
+export default function Timer({ timeLeftMs, totalMs, className = '' }) {
+  const progress = totalMs > 0 ? timeLeftMs / totalMs : 0
 
   return (
     <div className={`relative flex size-[233px] items-center justify-center ${className}`}>
@@ -31,12 +32,15 @@ export default function Timer({ timeLeft, total, className = '' }) {
           style={{
             background:
               'conic-gradient(from 0deg, var(--color-brand-orange-deep), var(--color-brand-orange-light), var(--color-brand-orange-deep))',
-            mask: `radial-gradient(farthest-side, transparent calc(100% - ${RING}px), #000 calc(100% - ${RING}px)), conic-gradient(#000 ${progress}turn, transparent 0)`,
+            // mask-image (no el atajo `mask`): al actualizarse cada tick, `mask` reiniciaría mask-composite.
+            // Los gradientes no tienen antialiasing: cada borde se difumina ~1px (y 0.6° en el extremo
+            // del progreso) para que el aro no se vea pixelado.
+            maskImage: `radial-gradient(farthest-side, transparent calc(100% - ${RING + 1}px), #000 calc(100% - ${RING}px), #000 calc(100% - 1px), transparent 100%), conic-gradient(#000 ${progress}turn, transparent calc(${progress}turn + 0.6deg))`,
             maskComposite: 'intersect',
           }}
         />
         <span className="bg-brand-gradient-v bg-clip-text text-[62px] font-bold leading-none text-transparent">
-          {format(timeLeft)}
+          {format(Math.ceil(timeLeftMs / 1000))}
         </span>
       </div>
     </div>

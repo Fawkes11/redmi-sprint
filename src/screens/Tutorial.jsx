@@ -35,7 +35,7 @@ export default function Tutorial({ onContinue }) {
       {/* Círculos inferiores detrás del botón: el pequeño encima del grande */}
       <div className="absolute left-[-368px] top-[1191px] size-[1816px] rounded-full bg-paper shadow-strong" />
       <div className="absolute left-[53px] top-[1456px] size-[974px] rounded-full bg-paper shadow-soft" />
-      <img src={lines} alt="" className="absolute left-[49px] top-[1293px] w-[980px] max-w-none" />
+      <img draggable={false} src={lines} alt="" className="absolute left-[49px] top-[1293px] w-[980px] max-w-none" />
 
       <h1 className="absolute inset-x-0 top-[331px] text-center text-[96px] font-bold leading-none text-paper-white">
         ¿CÓMO JUGAR?

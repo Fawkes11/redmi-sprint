@@ -1,0 +1,1382 @@
+[
+  {
+    "id": 1,
+    "question": "¿Cual es la capacidad de batería del nuevo REDMI Note 17 PRO MAX?, siendo el equipo con mayor batería en el mercado actual.",
+    "options": [
+      {
+        "key": "A",
+        "text": "9200mAh"
+      },
+      {
+        "key": "B",
+        "text": "9500mAh"
+      },
+      {
+        "key": "C",
+        "text": "10000mAh"
+      },
+      {
+        "key": "D",
+        "text": "9210mAh"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 2,
+    "question": "El cargador Hyper Charge (carga rapida) que incluye nuestro nuevo REDMI Note 17 PRO MAX permitirá que puedas tener del 0% a más del 80% de batería en tan solo 50 minutos, puesto que el cargador cuenta con...",
+    "options": [
+      {
+        "key": "A",
+        "text": "65W de carga rápida"
+      },
+      {
+        "key": "B",
+        "text": "90W de carga rápida"
+      },
+      {
+        "key": "C",
+        "text": "100W de carga rápida"
+      },
+      {
+        "key": "D",
+        "text": "120W de carga rápida"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 3,
+    "question": "Ahora con la tencología de nuestras baterías, la seríe REDMI Note 17 garatizará más años en el rendimiento y estado de la batería por encima del 80% de su salud, cuidado la inversión de nuestros clientes. ¿Cual es el tiempo de garantizamos?",
+    "options": [
+      {
+        "key": "A",
+        "text": "3 años"
+      },
+      {
+        "key": "B",
+        "text": "6 años"
+      },
+      {
+        "key": "C",
+        "text": "5 años"
+      },
+      {
+        "key": "D",
+        "text": "4 años"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 4,
+    "question": "Con la nueva serie REDMI Note 17 ahora no tendrás que preocuparte por quedarte sin carga en tus audifonos o incluso que un amigo se preocupe por la carga de su celular, puesto que ahora con la carga reversible de esta seríe podrás cargarlo rapidamente con:",
+    "options": [
+      {
+        "key": "A",
+        "text": "27W Pro MAX, 22.5W Pro, 22.5W 17 4G y 5G"
+      },
+      {
+        "key": "B",
+        "text": "25W Pro MAX, 22.5W Pro, 22.5W 17 4G y 5G"
+      },
+      {
+        "key": "C",
+        "text": "27W Pro MAX, 25W Pro, 22.5W 17 4G y 5G"
+      },
+      {
+        "key": "D",
+        "text": "27W Pro MAX, 27W Pro, 22.5W 17 4G y 5G"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 5,
+    "question": "La nueva batería del nuevo REDMI Note 17 PRO lograras disfrutar de 2.5 días de uso sin necesidad de llevar el cargador a todas partes, ya que cuenta con una batería de:",
+    "options": [
+      {
+        "key": "A",
+        "text": "8000mAh"
+      },
+      {
+        "key": "B",
+        "text": "8300mAh"
+      },
+      {
+        "key": "C",
+        "text": "8340mAh"
+      },
+      {
+        "key": "D",
+        "text": "7500mAh"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 6,
+    "question": "¿Cual es la potencia de carga \"HuperChrarge\" que viene incluido con el REDMI Note 17 PRO?",
+    "options": [
+      {
+        "key": "A",
+        "text": "64W de carga rápida"
+      },
+      {
+        "key": "B",
+        "text": "67W de carga rápida"
+      },
+      {
+        "key": "C",
+        "text": "90W de carga rápida"
+      },
+      {
+        "key": "D",
+        "text": "80W de carga rápida"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 7,
+    "question": "Tecnología de batería de la seríe REDMI Note 17, que permite exposición a altas y bajas temperaturas",
+    "options": [
+      {
+        "key": "A",
+        "text": "Iones de litio"
+      },
+      {
+        "key": "B",
+        "text": "Iones de silicio"
+      },
+      {
+        "key": "C",
+        "text": "Silicon carbon"
+      },
+      {
+        "key": "D",
+        "text": "Polimero de litio"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 8,
+    "question": "La serie REDMI Note 17 garantiza más ciclos de carga y descarga de la batería que otros fabricantes, que en promedio brindan 1000 a 1200 ciclos. Nosotros ofrecemos ____ ciclos de carga.",
+    "options": [
+      {
+        "key": "A",
+        "text": "1500 ciclos"
+      },
+      {
+        "key": "B",
+        "text": "1450 ciclos"
+      },
+      {
+        "key": "C",
+        "text": "1700 ciclos"
+      },
+      {
+        "key": "D",
+        "text": "1600 ciclos"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 9,
+    "question": "Las certificaciones obtenidas por una empresa Alemana en batería nos permiten certificar que tenemos 5 estrellas en duración, altas y bajas temperaturas, antipinchazos y resistencia a caidas, como en los ciclos de carga. Esta empresa que certifica se llamada __________.",
+    "options": [
+      {
+        "key": "A",
+        "text": "TÜV Rheinland"
+      },
+      {
+        "key": "B",
+        "text": "TÜV SÜD"
+      },
+      {
+        "key": "C",
+        "text": "SGS"
+      },
+      {
+        "key": "D",
+        "text": "DxOmark"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 10,
+    "question": "La mejor resistencia y tecnología en pantalla al mejor precio, la tienen los equipos REDMI Note 17 PRO y PRO MAX, ya que cuenta con ____________________.",
+    "options": [
+      {
+        "key": "A",
+        "text": "Corning Gorilla Glass Victus 2"
+      },
+      {
+        "key": "B",
+        "text": "Corning Gorilla Glass Victus+"
+      },
+      {
+        "key": "C",
+        "text": "Corning Gorilla Glass 7i"
+      },
+      {
+        "key": "D",
+        "text": "Corning Gorilla Glass 6"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 11,
+    "question": "La mejor resistencia y tecnología en pantalla al mejor precio, la tienen los equipos REDMI Note 17 4G y 5G, ya que cuenta con ____________________.",
+    "options": [
+      {
+        "key": "A",
+        "text": "Corning Gorilla Glass Victus 2"
+      },
+      {
+        "key": "B",
+        "text": "Corning Gorilla Glass Victus+"
+      },
+      {
+        "key": "C",
+        "text": "Corning Gorilla Glass 7i"
+      },
+      {
+        "key": "D",
+        "text": "Corning Gorilla Glass 6"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 12,
+    "question": "Con los nuevos REDMI Note 17 PRO y PRO MAX no vas a preocuparte por las caídas accidentales que tenga tu celular, ya que este cuenta con una certificación a caídas accidentales de hasta _______ de altura.",
+    "options": [
+      {
+        "key": "A",
+        "text": "2,5 metros"
+      },
+      {
+        "key": "B",
+        "text": "2 metros"
+      },
+      {
+        "key": "C",
+        "text": "1,5 metros"
+      },
+      {
+        "key": "D",
+        "text": "3 metros"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 13,
+    "question": "Nuestra resistencia a caídas accidentales y golpes esta certificada por la empresa Sueca llamada ____.",
+    "options": [
+      {
+        "key": "A",
+        "text": "SGS"
+      },
+      {
+        "key": "B",
+        "text": "TÜV Rheinland"
+      },
+      {
+        "key": "C",
+        "text": "SGC"
+      },
+      {
+        "key": "D",
+        "text": "RGC"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 14,
+    "question": "¿Como se llama el modelo comercial y/o de venta de Xiaomi Colombia?",
+    "options": [
+      {
+        "key": "A",
+        "text": "MI Speech"
+      },
+      {
+        "key": "B",
+        "text": "MI Xiaomi"
+      },
+      {
+        "key": "C",
+        "text": "MI Venta"
+      },
+      {
+        "key": "D",
+        "text": "MI Style"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 15,
+    "question": "¿Cuales son los nombres de los 4 pasos del modelo comercial de Xiaomi Colombia?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Mi Cliente, MI Pregunta, MI Experiencia, Mi Cierre"
+      },
+      {
+        "key": "B",
+        "text": "MI Saludo, MI Cliente, MI Experiencia y MI Cierre"
+      },
+      {
+        "key": "C",
+        "text": "MI Saludo, Mi Pregunta, MI Demostración y MI Cierre"
+      },
+      {
+        "key": "D",
+        "text": "MI Saludo, Mi Pregunta, MI Demostración y MI Venta"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 16,
+    "question": "En el paso \"MI Saludo\", del modelo comercial de Xiaomi Colombia debo realizar:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Realizar MI Saludo: \"Bievenido a Xiaomi, marca de dispositivos inteligentes, mi nombre es xxxxxxx, ¿como es su nombre?\""
+      },
+      {
+        "key": "B",
+        "text": "Realizar MI Saludo: \"Bievenido a Xiaomi, marca de dispositivos inteligentes, mi nombre es xxxxxxx, en que le puedo ayudar?\""
+      },
+      {
+        "key": "C",
+        "text": "Mi Bievenida: \"Bievenido a Xiaomi, marca de dispositivos inteligentes, mi nombre es xxxxxxx\""
+      },
+      {
+        "key": "D",
+        "text": "Realizar un saludo cordial; \"Bienvenido a Xiaomi, ¿como se encuentra? ¿que se encuentra buscando el día de hoy?"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 17,
+    "question": "En Xiaomi tenemos uno de los mejores servicios y procesos de garantía y la serie REDMI Note 17 no es la excepción, ya que puedo usar como estrategia para realizar el cierre de venta la conformación de lo que incluye, solo si adquiere su compra antes de 31 de diciembre del 2026.",
+    "options": [
+      {
+        "key": "A",
+        "text": "24 meses de garantía por desperfectos de fabrica y 1 reemplazo de pantalla dentro de los 2 primeros años"
+      },
+      {
+        "key": "B",
+        "text": "12 meses de garantía por desperfectos de fabrica, 1 reemplazo de pantalla dentro de los 2 primeros años y 1 reemplazo de batería durante los primeros 3 años si esta se encuentra por debajo del 80% de vida útil."
+      },
+      {
+        "key": "C",
+        "text": "24 meses de garantía por desperfectos de fanbrica, 1 reemplazo de pantalla dentro de los 2 primeros años y 1 reemplazo de batería durante los primeros 3 años si esta se encuentra por debajo del 80% de vida útil."
+      },
+      {
+        "key": "D",
+        "text": "24 meses de garantía por desperfectos de fanbrica, 1 reemplazo de pantalla dentro del primer año y 1 reemplazo de batería durante los primeros 3 años si esta se encuentra por debajo del 80% de vida útil."
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 18,
+    "question": "Los beneficios de adquirir alguno de nuestros equipos de la serie REDMI Note 17 son;",
+    "options": [
+      {
+        "key": "A",
+        "text": "3 meses de Spotify gratis, 3 meses de YouTube Premium gratis y 6 meses de Google One gratis."
+      },
+      {
+        "key": "B",
+        "text": "4 meses de Spotify gratis y 3 meses de YouTube Premium gratis."
+      },
+      {
+        "key": "C",
+        "text": "3 meses de Spotify gratis, 4 meses de YouTube Premium gratis y 6 meses de Google One gratis."
+      },
+      {
+        "key": "D",
+        "text": "4 meses de Spotify gratis, 3 meses de YouTube Premium gratis y 6 meses de Google One gratis"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 19,
+    "question": "Dentro del proceso comercial de venta de Xiaomi, una de las acciones más importantes para una decisión de compra más facil es:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Entregar el celular al cliente en la mano al realizar demostración."
+      },
+      {
+        "key": "B",
+        "text": "Informarle todas las especificaciones tecnicas del cliente."
+      },
+      {
+        "key": "C",
+        "text": "indicar al cliente el obsequio para que tome una decisión de venta más rapido desde el inicio de la conversación."
+      },
+      {
+        "key": "D",
+        "text": "Indicar que una vez se compre el dispositivo, podemos ayudarlo a pasar su información al telefono nuevo."
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 20,
+    "question": "Nuestros clientes ya no tendrán problemas de batería y tener que invertir mucho por una excelente batería, ya que nuestros nuevos REDMI Note 17 4G y 5G cuentan con una capacidad de batería de ___________ con tecnologia Silicon Carbón.",
+    "options": [
+      {
+        "key": "A",
+        "text": "7000mAh"
+      },
+      {
+        "key": "B",
+        "text": "7700mAh"
+      },
+      {
+        "key": "C",
+        "text": "7200mAh"
+      },
+      {
+        "key": "D",
+        "text": "7500mAh"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 21,
+    "question": "Un cliente busca un smartphone que pueda mantener una experiencia fluida durante varios años. ¿Qué característica de la Serie REDMI Note 17 respalda mejor este argumento comercial?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pantalla AMOLED de 120 Hz"
+      },
+      {
+        "key": "B",
+        "text": "Hasta 6 años de fluidez con Note 17 Pro Max"
+      },
+      {
+        "key": "C",
+        "text": "Carga inversa de 22,5 W"
+      },
+      {
+        "key": "D",
+        "text": "Tenemos la mejor resitencia certificada SGS"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 22,
+    "question": "Un cliente utiliza varias aplicaciones simultáneamente y busca un equipo con una plataforma orientada al rendimiento. ¿Qué combinación corresponde al REDMI Note 17 Pro Max 5G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Snapdragon 6s Gen4 + LPDDR4X"
+      },
+      {
+        "key": "B",
+        "text": "Snapdragon 6 Gen 4 5G + LPDDR4X"
+      },
+      {
+        "key": "C",
+        "text": "Snapdragon 6 Gen 5 de 4 nm + LPDDR5X"
+      },
+      {
+        "key": "D",
+        "text": "Snapdragon 6 Gen 4 5G + LPDDR6X"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 23,
+    "question": "Una clienta quiere obtener retratos con mayor entrada de luz y estabilización óptica. ¿Qué función en el equipo REDMI Note 17 5G puedes mostrar?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Modo acuático"
+      },
+      {
+        "key": "B",
+        "text": "Retrato ultra nítido"
+      },
+      {
+        "key": "C",
+        "text": "Cinematrografíaen vivo"
+      },
+      {
+        "key": "D",
+        "text": "video dual"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 24,
+    "question": "Durante un viaje de negocios al exterior, Sofía necesita tomar notas rápidas de conferencias extensas y atender llamadas telefónicas con socios extranjeros en tiempo real sin dominar completamente el idioma. ¿Qué funciones de Xiaomi HyperAI integradas en la Serie REDMI Note 17 dan solución directa a su necesidad?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Wet Touch 2.0 y el escalador gráfico de video dinámico."
+      },
+      {
+        "key": "B",
+        "text": "Intérprete de IA (traducción en tiempo real en llamadas/reuniones) y Escritura con IA (resumen, organización de notas y ortografía)"
+      },
+      {
+        "key": "C",
+        "text": "Cielo de IA y la Expansión de imágenes inteligente en galería"
+      },
+      {
+        "key": "D",
+        "text": "Círculo para buscar de Google (Circle to Search)"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 25,
+    "question": "Mateo se encuentra viendo un video en redes sociales en su REDMI Note 17 Pro 5G y nota una mochila que le interesa comprar, pero el video no menciona la marca ni la tienda. ¿De qué forma puede identificarla de inmediato sin pausar la app ni tomar capturas de pantalla?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Activando el zoom dinámico de la cámara principal hacia la pantalla."
+      },
+      {
+        "key": "B",
+        "text": "Realizando una captura de pantalla y subiéndola al navegador de forma manual."
+      },
+      {
+        "key": "C",
+        "text": "Utilizando Círculo para buscar de Google (Circle to Search), dibujando un círculo o tocando directamente la mochila en pantalla."
+      },
+      {
+        "key": "D",
+        "text": "No tenemos ninguna opción"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 26,
+    "question": "Un cliente disfruta tomar fotografías de paisajes y grupos de personas y necesita ampliar el campo de visión. ¿Qué cámara complementa la principal de 50 MP en el REDMI Note 17 Pro Max 5G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "16 MP macro"
+      },
+      {
+        "key": "B",
+        "text": "8 MP ultra gran angular"
+      },
+      {
+        "key": "C",
+        "text": "2 MP profundidad"
+      },
+      {
+        "key": "D",
+        "text": "32MP de frontal"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 27,
+    "question": "Camila es una creadora de contenido que documenta sus viajes en blogs de video. Necesita un equipo cuya cámara delantera le permita grabarse mientras camina, exigiendo la máxima definición de imagen disponible para redes y plataformas de video. ¿Qué característica del REDMI Note 17 Pro Max 5G satisface con precisión su requerimiento?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cámara frontal de 32 MP con capacidad de grabación de video en resolución 4K."
+      },
+      {
+        "key": "B",
+        "text": "Cámara frontal de 16 MP con capacidad de grabación de video en resolución 4K."
+      },
+      {
+        "key": "C",
+        "text": "Cámara frontal de 50 MP con lente ultra gran angular y filtros de belleza estándar."
+      },
+      {
+        "key": "D",
+        "text": "Cámara frontal de 32 MP con capacidad de grabación de video en resolución 1080"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 28,
+    "question": "Andrés trabaja en un taller mecánico donde el ruido de las máquinas y herramientas suele impedirle escuchar notas de voz o instrucciones multimedia cuando no tiene sus audífonos puestos. ¿Qué solución de sonido integra el REDMI Note 17 Pro Max 5G para este tipo de situaciones?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Parlante monoaural con realce de agudos al 150%."
+      },
+      {
+        "key": "B",
+        "text": "Altavoces duales con aumento de volumen de hasta un 400%, optimizados con Dolby Atmos y certificación Hi-Res Audio Wireless."
+      },
+      {
+        "key": "C",
+        "text": "Sistema pasivo de resonancia con incremento máximo del 120%."
+      },
+      {
+        "key": "D",
+        "text": "Un altavoces con aumento de volumen de hasta un 400%, optimizados con Dolby Atmos y certificación Hi-Res Audio Wireless."
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 29,
+    "question": "Al comparar la potencia de salida de audio entre los modelos Pro de la familia, ¿cuál es el porcentaje máximo de amplificación de volumen de los altavoces duales en el REDMI Note 17 Pro 5G frente al REDMI Note 17 Pro Max 5G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Hasta 200% en el Note 17 Pro 5G y 400% en el Note 17 Pro Max 5G."
+      },
+      {
+        "key": "B",
+        "text": "Hasta 300% en el Note 17 Pro 5G y hasta 400% en el Note 17 Pro Max 5G."
+      },
+      {
+        "key": "C",
+        "text": "Hasta 200% en el Note 17 Pro 5G y hasta 400% en el Note 17 Pro Max 5G"
+      },
+      {
+        "key": "D",
+        "text": "Hasta 300% en el Note 17 Pro 5G y 300% en el Note 17 Pro Max 5G."
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 30,
+    "question": "Para brindar una correcta asesoría sobre las opciones estéticas del REDMI Note 17 Pro 5G, ¿cuál es la disponibilidad oficial de colores para este modelo?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Naranja satinado, Azul cielo, Morado (Violeta) y Negro."
+      },
+      {
+        "key": "B",
+        "text": "Rosa Nube, Verde menta, Morado y Negro."
+      },
+      {
+        "key": "C",
+        "text": "Azul verdoso, Púrpura celestial, Blanco titanio y Gris oscuro"
+      },
+      {
+        "key": "D",
+        "text": "Blanco titanio y Gris oscuro, Naranja satinado, Azul cielo,"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 31,
+    "question": "“Estoy en una reunión con amigos y quiero grabarme mientras muestro lo que ocurre frente a mí”. ¿Qué función de la Serie REDMI Note 17 puede utilizar para este tipo de contenido?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Captura Dual Premium que solamente la trae el REDMI Note 17 4G"
+      },
+      {
+        "key": "B",
+        "text": "Captura Dual Premium que solamente la trae el REDMI Note 17 Pro 5G"
+      },
+      {
+        "key": "C",
+        "text": "Captura Dual que la traen todos los equipos de la serie"
+      },
+      {
+        "key": "D",
+        "text": "Descargar una App para tener más opciones"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 32,
+    "question": "Un cliente comenta: “Me gusta que mi teléfono se vea limpio y elegante, pero me molestan mucho las huellas en la parte trasera”. ¿Qué característica del diseño de la Serie REDMI Note 17 responde mejor a esta necesidad?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Bisel ultradelgado"
+      },
+      {
+        "key": "B",
+        "text": "Cubierta trasera mate resistente a huellas dactilares"
+      },
+      {
+        "key": "C",
+        "text": "Pantalla plana FHD+"
+      },
+      {
+        "key": "D",
+        "text": "Solo ponerle funda"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 33,
+    "question": "Un cliente busca un smartphone para consumir contenido multimedia y prioriza tanto una experiencia visual fluida como un audio potente. ¿Qué combinación corresponde al REDMI Note 17 Pro 5G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pantalla FHD+ de 120 Hz + dos altavoces con aumento de volumen de hasta 300 %"
+      },
+      {
+        "key": "B",
+        "text": "Pantalla 1.5K de 120 Hz + dos altavoces con aumento de volumen de hasta 300 %"
+      },
+      {
+        "key": "C",
+        "text": "Pantalla HD+ de 120 Hz + altavoz mono"
+      },
+      {
+        "key": "D",
+        "text": "Pantalla 1.5K de 120 Hz + dos altavoces con aumento de volumen de hasta 400 %"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 34,
+    "question": "Una persona busca un teléfono con una pantalla grande, pero quiere que el diseño aproveche bien el espacio frontal. ¿Qué característica de la Serie REDMI Note 17 puede mencionarse?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Marco posterior brillante"
+      },
+      {
+        "key": "B",
+        "text": "Cámara externa metálica"
+      },
+      {
+        "key": "C",
+        "text": "Bisel ultradelgado"
+      },
+      {
+        "key": "D",
+        "text": "Fibra de vidrio"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 35,
+    "question": "Una clienta quiere un teléfono con una pantalla que combine diseño moderno y experiencia visual fluida. ¿Qué característica de pantalla acompaña al diseño de la Serie REDMI Note 17 4G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pantalla AMOLED FHD+ de 6,99” con 120 Hz"
+      },
+      {
+        "key": "B",
+        "text": "Pantalla HD+ de 6,99” con 120 Hz"
+      },
+      {
+        "key": "C",
+        "text": "Pantalla LCD de 6,99” con 120 Hz"
+      },
+      {
+        "key": "D",
+        "text": "Pantalla AMOLED FHD+ de 6,83” con 120 Hz"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 36,
+    "question": "El diseño de la Serie REDMI Note 17 Pro introduce un módulo Deco estilizado y moderno. ¿Cuáles son las características estructurales que definen el módulo del REDMI Note 17 Pro Max 5G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Módulo plástico genérico con esquinas rectas y flash saliente."
+      },
+      {
+        "key": "B",
+        "text": "Diseño de pista de cámara metálica, anillo interno de cámara brillante, anillo externo mate y cubierta trasera mate antihuellas dactilares."
+      },
+      {
+        "key": "C",
+        "text": "Módulo circular central con cubierta brillante propensa a huellas y polvo."
+      },
+      {
+        "key": "D",
+        "text": "Protección con SGS Y TUV SUD"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 37,
+    "question": "Un usuario corporativo busca un equipo sobrio pero distintivo, mientras que su compañera prefiere un color fresco y primaveral. Al consultar la paleta oficial del REDMI Note 17 Pro Max 5G, ¿cuáles son los cuatro colores disponibles para ofrecerles?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Rosa Nube, Morado, Verde y Negro."
+      },
+      {
+        "key": "B",
+        "text": "Naranja satinado, Azul cielo, Violeta y Plateado."
+      },
+      {
+        "key": "C",
+        "text": "Azul verdoso, Púrpura celestial, Blanco perla y Gris grafito."
+      },
+      {
+        "key": "D",
+        "text": "Rosa Nube, Morado,Violeta y Plateado."
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 38,
+    "question": "En el segmento estándar, el REDMI Note 17 / Note 17 5G incorpora un cristal de protección de pantalla desarrollado para resistir arañazos y fricción en bolsillos o bolsos con llaves. ¿Qué tecnología de protección integra su panel?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Vidrio sodocálcico estándar sin tratamiento térmico."
+      },
+      {
+        "key": "B",
+        "text": "Corning Gorilla Glass Victus 2 con resistencia a caídas de 3 metros."
+      },
+      {
+        "key": "C",
+        "text": "Panel Corning Gorilla Glass 7i (GG7i) de nivel profesional resistente a los arañazos."
+      },
+      {
+        "key": "D",
+        "text": "Corning Gorilla Glass Victus 2 con resistencia a caídas de 2 metros."
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 39,
+    "question": "Mariana se tomó un autorretrato en condiciones de luz artificial de cafetería y nota que su rostro quedó con brillo excesivo y tonos de piel desbalanceados. ¿Qué función inteligente del sistema ajusta texturas faciales y balance tonal de forma natural sin crear un efecto acartonado?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Embellecimiento con IA / Belleza con IA, diseñado para preservar la naturalidad del rostro mientras optimiza la nitidez y el tono."
+      },
+      {
+        "key": "B",
+        "text": "IA Eliminar reflejos aplicada sobre los ojos."
+      },
+      {
+        "key": "C",
+        "text": "Expansión de imágenes mediante IA en plano cerrado."
+      },
+      {
+        "key": "D",
+        "text": "Puedes descaragar la edición de Google AI"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 40,
+    "question": "Para creadores de contenido y videollamadas de nivel profesional, ¿cuál es la diferencia clave en la cámara frontal entre el REDMI Note 17 Pro 5G y el REDMI Note 17 Pro Max 5G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Ambos disponen exactamente del mismo sensor de 16 MP limitado a 1080p a 30 fps."
+      },
+      {
+        "key": "B",
+        "text": "El Note 17 Pro 5G cuenta con sensor de 32 MP y el Pro Max 5G tiene sensor ultra gran angular de 8 MP."
+      },
+      {
+        "key": "C",
+        "text": "El Note 17 Pro 5G tiene cámara frontal de 16 MP, mientras que el Note 17 Pro Max 5G incorpora cámara frontal de 32 MP con capacidad de grabación de video en resolución 4K."
+      },
+      {
+        "key": "D",
+        "text": "Los dos son iguales en cámaras"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 41,
+    "question": "Para capturar fotografías o videos bajo el agua con el REDMI Note 17 Pro 5G o REDMI Note 17 Pro Max sin que la presión genere toques involuntarios, la función recomendada es:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Activar el temporizador de 10 segundos"
+      },
+      {
+        "key": "B",
+        "text": "\"Lo ideal es activar el 'Modo bajo el agua' y simplemente usar los botones de volumen para tomar tus fotos o grabar."
+      },
+      {
+        "key": "C",
+        "text": "Configurar el disparo por detección de sonrisa"
+      },
+      {
+        "key": "D",
+        "text": "Usar exclusivamente comandos por voz"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 42,
+    "question": "¿A qué profundidad y durante cuánto tiempo se superó la prueba de inmersión del REDMI Note 17 Pro 5G y REDMI Note 17 Pro Max?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Hasta 1.5 metros durante 30 minutos"
+      },
+      {
+        "key": "B",
+        "text": "Hasta 2 metros durante 24 A 72 horas"
+      },
+      {
+        "key": "C",
+        "text": "Hasta 3 metros durante 12 horas"
+      },
+      {
+        "key": "D",
+        "text": "hasta 5 metros durante 24/72 horas"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 43,
+    "question": "¿Qué entidad internacional otorga la certificación oficial de resistencia al agua para el REDMI Note 17 Pro 5G y el REDMI Note 17 Pro Max?",
+    "options": [
+      {
+        "key": "A",
+        "text": "ISO 9001"
+      },
+      {
+        "key": "B",
+        "text": "Corning Gorilla"
+      },
+      {
+        "key": "C",
+        "text": "TÜV Rheinland"
+      },
+      {
+        "key": "D",
+        "text": "TÜV SÜD"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 44,
+    "question": "Al hablar de la función de fotografía bajo el agua (limitada estrictamente a agua dulce) , ¿cuál es el argumento principal que le damos al cliente en el speech comercial?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Reemplaza al 100% a una cámara de buceo profesional a más de 50 metros"
+      },
+      {
+        "key": "B",
+        "text": "Brinda versatilidad y libertad de registrar momentos en piscina, lluvia sin temor a daños por agua"
+      },
+      {
+        "key": "C",
+        "text": "Solo funciona conectando una carcasa de buceo externa obligatoria"
+      },
+      {
+        "key": "D",
+        "text": "Exclusividad para fotografías en modo blanco y negro"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 45,
+    "question": "Si un cliente te pregunta por la pantalla 'Visual Care' en la serie Redmi Note 17, ¿cuál le dirías que es su objetivo principal?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Reducir el consumo de datos móviles"
+      },
+      {
+        "key": "B",
+        "text": "Duplicar la resolución nativa de los videos en redes sociales"
+      },
+      {
+        "key": "C",
+        "text": "Impedir que otras personas vean la pantalla en lugares públicos"
+      },
+      {
+        "key": "D",
+        "text": "Cuidar sus ojos para evitar el cansancio, reducir la luz azul y adaptar la pantalla para no afectar su sueño."
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 46,
+    "question": "Para demostrar la suavidad de la pantalla Visual Care en baja luz frente a un equipo convencional, en los REDMI Note 17 y 17 5G debemos activar el ____________________, mientras que en los modelos Pro 5G y Pro Max activamos el ____________________.",
+    "options": [
+      {
+        "key": "A",
+        "text": "Modo Lectura / Modo Confort Visual"
+      },
+      {
+        "key": "B",
+        "text": "Modo Gamer / Modo Visual"
+      },
+      {
+        "key": "C",
+        "text": "Modo Ahorro / Modo Rendimiento"
+      },
+      {
+        "key": "D",
+        "text": "Modo Lectura / Modo Oscuro"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 47,
+    "question": "¿Cuáles son las dos certificaciones internacionales de cuidado visual que comparte toda la serie REDMI Note 17 en sus pantallas?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Flicker Free y Color Accuracy"
+      },
+      {
+        "key": "B",
+        "text": "Low Blue Light y Circadian Friendly"
+      },
+      {
+        "key": "C",
+        "text": "Ultra HD Protection y Eye Comfort Pro"
+      },
+      {
+        "key": "D",
+        "text": "Anti-Glare y Sleep Guardian"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 48,
+    "question": "La tecnología de atenuación PWM de alta frecuencia de la pantalla Visual Care contribuye a:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Incrementar la potencia del altavoz estéreo"
+      },
+      {
+        "key": "B",
+        "text": "Disminuir la tasa de refresco a 30Hz en todo momento"
+      },
+      {
+        "key": "C",
+        "text": "Hacer la pantalla más resistente a impactos físicos"
+      },
+      {
+        "key": "D",
+        "text": "Eliminar el parpadeo invisible de la pantalla a niveles bajos de brillo, previniendo dolores de cabeza y cansancio ocular"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 49,
+    "question": "La función \"Modo Guantes\", diseñada para incrementar la sensibilidad de la pantalla táctil y permitir su uso sin inconvenientes, es una característica que se encuentra disponible exclusivamente en los modelos ____________ y ____________.",
+    "options": [
+      {
+        "key": "A",
+        "text": "REDMI Note 17 / REDMI Note 17 5G"
+      },
+      {
+        "key": "B",
+        "text": "REDMI Note 17 Pro Max / REDMI Note 17 Pro"
+      },
+      {
+        "key": "C",
+        "text": "Redmi 17 / Redmi A7"
+      },
+      {
+        "key": "D",
+        "text": "Xiaomi 17T / Redmi A7pro"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 50,
+    "question": "Sabiendo que la combinación de \"Toque Húmedo\" y \"Modo Guantes\" es una ventaja exclusiva de los modelos REDMI Note 17 y REDMI Note 17 5G, ¿qué tipo de usuarios o perfiles se benefician directamente de estas funciones?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Gamers profesionales que necesitan máxima tasa de refresco en torneos."
+      },
+      {
+        "key": "B",
+        "text": "Creadores de contenido que graban en estudios con iluminación controlada"
+      },
+      {
+        "key": "C",
+        "text": "Repartidores, trabajadores en exteriores, deportistas o personas en climas fríos/lluviosos"
+      },
+      {
+        "key": "D",
+        "text": "Usuarios que solo utilizan el equipo para leer correos en la oficina"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 51,
+    "question": "En la demostración de venta (Paso \"MI Experiencia\"), ¿cuál es la mejor forma de evidenciar el Modo Guantes y Toque Húmedo?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Rociar suavemente un poco de agua o invitar al cliente a colocarse un guante y deslizar la pantalla para verificar la respuesta inmediata"
+      },
+      {
+        "key": "B",
+        "text": "Leer las especificaciones técnicas del manual al cliente"
+      },
+      {
+        "key": "C",
+        "text": "Explicar el código de programación del sistema operativo"
+      },
+      {
+        "key": "D",
+        "text": "Mostrar una fotografía estática del teléfono en una caja cerrada"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 52,
+    "question": "Un escenario cotidiano ideal para argumentar el valor de la certificación IP y el Toque Húmedo al cliente es:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Utilizar el teléfono como control remoto infrarrojo en el televisor"
+      },
+      {
+        "key": "B",
+        "text": "Cocinar con manos húmedas o responder un mensaje bajo lluvia sin perder respuesta táctil"
+      },
+      {
+        "key": "C",
+        "text": "Transferir archivos pesados mediante Bluetooth"
+      },
+      {
+        "key": "D",
+        "text": "Cambiar la tarjeta SIM frecuentemente"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 53,
+    "question": "La certificación de resistencia al agua y al polvo (ej. IP68 / nivel avanzado) en la serie REDMI Note 17 significa que:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Redmi 17 / Redmi A7"
+      },
+      {
+        "key": "B",
+        "text": "Xiaomi 17T / Redmi A7pro"
+      },
+      {
+        "key": "C",
+        "text": "REDMI Note 17 Pro 5G / REDMI Note 17 Pro Max"
+      },
+      {
+        "key": "D",
+        "text": "REDMI Note 17 / REDMI Note 17 5G"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 54,
+    "question": "En el paso \"MI Cliente\" del modelo comercial, ¿cuál es la pregunta paso a paso ideal para identificar si la tecnología Visual Care es un beneficio clave para el usuario?",
+    "options": [
+      {
+        "key": "A",
+        "text": "¿De qué color prefiere su celular?"
+      },
+      {
+        "key": "B",
+        "text": "¿Pasa muchas horas leyendo, trabajando o viendo series en el celular antes de dormir?"
+      },
+      {
+        "key": "C",
+        "text": "¿Cuántas fotografías toma al día en exteriores?"
+      },
+      {
+        "key": "D",
+        "text": "¿Qué operador de telefonía utiliza actualmente?"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 55,
+    "question": "Ordena el paso a paso correcto de nuestro modelo comercial aplicado a la venta específica de la pantalla Visual Care:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Vender el equipo, configurar el modo lectura, saludar al cliente, preguntar para qué lo usa."
+      },
+      {
+        "key": "B",
+        "text": "MI Experiencia, MI Saludo, MI Cierre, MI Cliente."
+      },
+      {
+        "key": "C",
+        "text": "MI Saludo: Dar la bienvenida al ecosistema -> MI Cliente: Indagar sobre sus hábitos de uso nocturno -> MI Experiencia: Demostrar la atenuación y el modo lectura -> MI Cierre: Reforzar la certificación de salud visual."
+      },
+      {
+        "key": "D",
+        "text": "Saludar, cobrar, entregar el equipo empacado, leer la ficha técnica"
+      }
+    ],
+    "correct": "C"
+  },
+  {
+    "id": 56,
+    "question": "Si el cliente te pide que le expliques cómo funciona la protección visual paso a paso, debes indicarle que la pantalla de la serie REDMI Note 17 primero filtra la _____________, luego ajusta la _____________ según la hora del día y, finalmente, elimina el _____________ para evitar la fatiga visual.",
+    "options": [
+      {
+        "key": "A",
+        "text": "luz azul dañina / temperatura de color / parpadeo invisible"
+      },
+      {
+        "key": "B",
+        "text": "iluminación trasera / intensidad de brillo / consumo de batería"
+      },
+      {
+        "key": "C",
+        "text": "tasa de refresco / resolución gráfica / retraso táctil"
+      },
+      {
+        "key": "D",
+        "text": "visibilidad lateral / saturación de colores / reflejo exterior"
+      }
+    ],
+    "correct": "A"
+  },
+  {
+    "id": 57,
+    "question": "Si un cliente pregunta si su REDMI Note 17 Pro Max se dañará si le cae líquido accidentalmente en la mesa, la respuesta comercial adecuada es:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Sí, cualquier derrame anula la garantía inmediatamente, debe comprar un seguro adicional."
+      },
+      {
+        "key": "B",
+        "text": "Sí, el líquido entrará por los altavoces, pero se secará solo dejándolo al sol"
+      },
+      {
+        "key": "C",
+        "text": "No se dañará siempre y cuando el líquido sea exclusivamente agua destilada y no café o refresco."
+      },
+      {
+        "key": "D",
+        "text": "No, gracias a su certificación IP avanzada, el equipo está sellado contra derrames accidentales y polvo, brindando tranquilidad en el uso diario"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 58,
+    "question": "Aunque la certificación IP protege los componentes internos del REDMI Note 17 Pro 5G contra el agua, ¿qué tecnología complementaria garantiza que la pantalla siga respondiendo a los dedos correctamente si la superficie está mojada",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pantalla Visual Care"
+      },
+      {
+        "key": "B",
+        "text": "Tecnología de Toque Húmedo (Wet Touch)"
+      },
+      {
+        "key": "C",
+        "text": "Modo Guantes de alta sensibilidad"
+      },
+      {
+        "key": "D",
+        "text": "Tasa de refresco adaptativa"
+      }
+    ],
+    "correct": "B"
+  },
+  {
+    "id": 59,
+    "question": "La certificación ____________ en los modelos REDMI Note 17 y REDMI Note 17 5G asegura que el dispositivo está totalmente sellado contra el ____________ y puede resistir ____________ de agua, dándole tranquilidad al usuario frente a accidentes cotidianos.",
+    "options": [
+      {
+        "key": "A",
+        "text": "IP68 / agua salada / inmersiones profundas"
+      },
+      {
+        "key": "B",
+        "text": "IP54 / magnetismo / temperaturas extremas"
+      },
+      {
+        "key": "C",
+        "text": "militar / desgaste / golpes de martillo"
+      },
+      {
+        "key": "D",
+        "text": "IP65 / polvo / salpicaduras"
+      }
+    ],
+    "correct": "D"
+  },
+  {
+    "id": 60,
+    "question": "Teniendo en cuenta el paso \"MI Cliente\" del modelo comercial de Xiaomi Colombia, ¿qué pregunta te ayuda a perfilar a un usuario que valorará especialmente la certificación IP65 del REDMI Note 17 y REDMI Note 17 5G?",
+    "options": [
+      {
+        "key": "A",
+        "text": "¿Suele contestar llamadas mientras camina bajo la lluvia, hace ejercicio o trabaja en exteriores donde el clima es impredecible?"
+      },
+      {
+        "key": "B",
+        "text": "¿Necesita conectar su teléfono a pantallas externas de alta resolución?"
+      },
+      {
+        "key": "C",
+        "text": "¿Le gusta jugar videojuegos pesados durante 8 horas seguidas?"
+      },
+      {
+        "key": "D",
+        "text": "¿Está buscando un teléfono para usarlo como cámara de buceo profesional?"
+      }
+    ],
+    "correct": "A"
+  }
+]

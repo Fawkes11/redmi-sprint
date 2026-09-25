@@ -5,5 +5,12 @@ dist
 src/dev/
 PENDIENTES-FIGMA.md
 
-# Se genera desde el Excel en cada build (npm run questions)
-src/data/questions.json
+# Excel del cliente: fuente de las preguntas, se queda solo en local.
+# En el repositorio va src/data/questions.json, generado con `npm run questions`.
+*.xlsx
+~$*
+
+# Sistema y logs
+*.log
+.DS_Store
+Thumbs.db

@@ -1,7 +1,7 @@
 // Convierte el Excel del cliente a src/data/questions.json en build time.
 // La respuesta correcta viene marcada en el Excel con relleno amarillo (#FFF258).
 import ExcelJS from 'exceljs'
-import { mkdir, writeFile } from 'node:fs/promises'
+import { access, mkdir, writeFile } from 'node:fs/promises'
 
 const SOURCE = new URL('../Questions REDMI Note 17 Series.xlsx', import.meta.url)
 const OUTPUT = new URL('../src/data/questions.json', import.meta.url)
@@ -17,6 +17,18 @@ const CONFIRMED_ANSWERS = {
 const clean = (value) => {
   const text = value?.richText ? value.richText.map((r) => r.text).join('') : value
   return String(text ?? '').replace(/\s+/g, ' ').trim()
+}
+
+const exists = (url) => access(url).then(() => true, () => false)
+
+// El Excel no se sube al repositorio: si no está (p. ej. en GitHub Actions), se usa el
+// questions.json ya versionado. Para actualizar las preguntas, correr esto en local con el Excel.
+if (!(await exists(SOURCE))) {
+  if (await exists(OUTPUT)) {
+    console.log('Excel no encontrado: se usa src/data/questions.json existente')
+    process.exit(0)
+  }
+  throw new Error('No se encontró el Excel de preguntas ni src/data/questions.json')
 }
 
 const workbook = new ExcelJS.Workbook()

@@ -19,42 +19,52 @@ const QUESTION_BOTTOM = 835
 const QUESTION_MAX_HEIGHT = QUESTION_BOTTOM - 710
 const questionFits = (el) => el.scrollHeight <= QUESTION_MAX_HEIGHT
 
-// Nombre en la tarjeta de puntaje: 96px, se reduce para que quepan nombres de 8–9 letras
-// dentro del círculo naranja; más largos se recortan con "…" al llegar al mínimo.
-const NAME_MAX_WIDTH = 400
-const nameFits = (el) => el.scrollWidth <= el.clientWidth
+// Nombre en la tarjeta de puntaje: 56px (en prueba). Si no cabe en una línea pasa a dos, y si aun
+// así no cabe se reduce hasta 40px; como último recurso, "…" al final de la segunda línea.
+// El padding vertical (compensado con margen negativo) evita que se corten g, j, p, y.
+// 300px: con la línea y el bloque del puntaje, la fila queda dentro del círculo naranja (~600px de ancho ahí)
+const NAME_MAX_WIDTH = 300
+// Se mide sin cortar palabras: así primero se reduce la letra, y `break-words` solo parte una
+// palabra si ni siquiera cabe al tamaño mínimo
+const nameFits = (el) => {
+  el.style.overflowWrap = 'normal'
+  const fits = el.scrollHeight <= el.clientHeight + 1 && el.scrollWidth <= el.clientWidth
+  el.style.overflowWrap = ''
+  return fits
+}
 
-// 04 — Inicio de preguntas (Figma 514:323). Solo presentación: la lógica vive en App (Fase 3).
+// 04 — Inicio de preguntas (Figma 514:323). Solo presentación: la lógica vive en useGame.
 export default function Preguntas({
   number,
   total,
   question,
   selected,
   onSelect,
-  timeLeft,
-  totalTime,
+  timeLeftMs,
+  totalMs,
   feedback,
   playerName,
   score,
+  phoneRef,
 }) {
   const result = feedback && FEEDBACK[feedback]
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-paper">
       {/* Mismo grupo de líneas que la pantalla 03, desplazado: punta central en Y 599 */}
-      <img src={lines} alt="" className="absolute left-[25px] top-[-419px] max-w-none" />
+      <img draggable={false} src={lines} alt="" className="absolute left-[25px] top-[-419px] max-w-none" />
 
       {/* Círculos detrás del resultado (debajo de las respuestas) */}
       <div className="absolute left-[53px] top-[1456px] size-[974px] rounded-full bg-paper shadow-soft-sm" />
       <div className="absolute left-[141px] top-[1609px] size-[798px] rounded-full bg-brand-gradient" />
 
-      <img src={xiaomiLogo} alt="Xiaomi" className="absolute left-1/2 top-[64px] size-[122.65px] max-w-none -translate-x-1/2" />
+      <img draggable={false} src={xiaomiLogo} alt="Xiaomi" className="absolute left-1/2 top-[64px] size-[122.65px] max-w-none -translate-x-1/2" />
 
       <div className="absolute left-1/2 top-[281px] flex h-[103px] w-[468px] -translate-x-1/2 items-center justify-center rounded-full bg-brand-gradient text-[48px] font-bold leading-none text-paper-white">
         Pregunta {number}/{total}
       </div>
 
-      <Timer timeLeft={timeLeft} total={totalTime} className="absolute left-1/2 top-[456px] -translate-x-1/2" />
+      <Timer timeLeftMs={timeLeftMs} totalMs={totalMs} className="absolute left-1/2 top-[456px] -translate-x-1/2" />
 
       <FitText
         max={36}
@@ -79,7 +89,7 @@ export default function Preguntas({
       </div>
 
       {/* Móvil encima de las respuestas y de los círculos */}
-      <img src={phone} alt="" className="pointer-events-none absolute left-[682px] top-[793px] max-w-none" />
+      <img draggable={false} ref={phoneRef} src={phone} alt="" className="pointer-events-none absolute left-[682px] top-[793px] max-w-none" />
 
       {result && (
         <div className="absolute left-[319px] top-[1569px] flex h-[143px] w-[442px] items-center justify-center rounded-full bg-ink-soft">
@@ -93,10 +103,10 @@ export default function Preguntas({
 
       <div className="absolute inset-x-0 top-[1745px] flex h-[109.5px] items-center justify-center gap-[24px] text-paper-white">
         <FitText
-          max={96}
-          min={48}
+          max={56}
+          min={40}
           fits={nameFits}
-          className="block truncate font-bold leading-none"
+          className="-my-[0.2em] line-clamp-2 py-[0.2em] text-right font-bold leading-[1.05] break-words"
           style={{ maxWidth: NAME_MAX_WIDTH }}
         >
           {playerName}
