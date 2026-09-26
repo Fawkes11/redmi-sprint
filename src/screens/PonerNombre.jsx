@@ -64,7 +64,7 @@ export default function PonerNombre({ onBack, onContinue, validate, phoneRef }) 
             {error}
           </p>
         </div>
-        <BrandButton type="submit" className="mt-[82px]">
+        <BrandButton type="submit" className="mt-[82px] relative z-20">
           CONTINUAR
         </BrandButton>
       </form>
