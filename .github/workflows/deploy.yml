@@ -1,11 +1,19 @@
-# Publica el build estático en GitHub Pages en cada push a main.
-# Requiere: Settings → Pages → Source: "GitHub Actions".
+# Publica en GitHub Pages: main en la raíz y la rama de vista previa en /efectos/.
+# Se ejecuta con cada push a cualquiera de las dos ramas y siempre publica ambas juntas,
+# porque Pages solo admite un sitio por repositorio.
+# Requiere: Settings → Pages → Source: "GitHub Actions", y en Settings → Environments →
+# github-pages, permitir también la rama de vista previa.
+# Cuando la rama de vista previa se fusione o se borre, su build se omite solo.
 name: Deploy a GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, efectos-especiales]
   workflow_dispatch:
+
+env:
+  PREVIEW_BRANCH: efectos-especiales
+  PREVIEW_PATH: efectos
 
 permissions:
   contents: read
@@ -20,16 +28,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build
+
+      - name: Build de main (raíz del sitio)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+      - run: npm ci && npm run build
+        working-directory: main
+
+      - name: Build de la vista previa
+        id: preview
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.PREVIEW_BRANCH }}
+          path: preview
+      - if: steps.preview.outcome == 'success'
+        run: npm ci && npm run build && mkdir -p ../main/dist/$PREVIEW_PATH && cp -r dist/. ../main/dist/$PREVIEW_PATH/
+        working-directory: preview
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: main/dist
 
   deploy:
     needs: build
