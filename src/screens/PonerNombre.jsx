@@ -4,7 +4,8 @@ import VerticalLines from '../components/VerticalLines.jsx'
 import Icon from '../components/Icon.jsx'
 import arrowBack from '@material-symbols/svg-200/outlined/arrow_back.svg?raw'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
-// Recorte visible (1080×645) de la imagen de Figma de 1245×1075 en X -150, Y 1275
+// Figma: capa de 1040×1259 en X 18, Y 1034 (ya rotada). El PNG mide 1080×1351 porque incluye
+// el margen de la sombra (20px a los lados y arriba), por eso se ubica en X -2, Y 1014
 import phone from '../assets/devices/mobile-3-screen.png'
 
 // 03 — Poner nombre (Figma 539:23). `validate(nombre)` devuelve el mensaje de error o null.
@@ -58,7 +59,7 @@ export default function PonerNombre({ onBack, onContinue, validate, phoneRef }) 
           <p
             id="player-name-error"
             role="alert"
-            className="absolute inset-x-0 top-full mt-[14px] text-center text-[32px] font-semibold leading-none text-danger-from"
+            className="absolute inset-x-0 top-full mt-[14px] text-center text-[32px] font-semibold leading-none text-paper"
           >
             {error}
           </p>
@@ -71,7 +72,7 @@ export default function PonerNombre({ onBack, onContinue, validate, phoneRef }) 
       {/* Detalle inferior: círculos blancos superpuestos detrás del móvil */}
       <div className="absolute left-[-389px] top-[1571px] size-[1816px] rounded-full bg-paper shadow-soft" />
       <div className="absolute left-[-184px] top-[1777px] size-[1406px] rounded-full bg-paper shadow-soft" />
-      <img draggable={false} ref={phoneRef} src={phone} alt="" className="absolute left-0 top-[1275px] max-w-none" />
+      <img draggable={false} ref={phoneRef} src={phone} alt="" className="absolute left-[-2px] top-[1014px] max-w-none" />
     </div>
   )
 }

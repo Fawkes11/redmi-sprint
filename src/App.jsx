@@ -8,6 +8,7 @@ import Resultados from './screens/Resultados.jsx'
 import useGame from './lib/useGame.js'
 import { addToRanking, loadRanking, nameExists } from './lib/ranking.js'
 import { nameToQuestions } from './lib/transitions.js'
+import { TIME_UP_MS } from './config.js'
 import allQuestions from './data/questions.json'
 
 // Solo entran al juego las preguntas con respuesta correcta definida
@@ -32,11 +33,24 @@ export default function App() {
   const namePhoneRef = useRef(null)
   const questionsPhoneRef = useRef(null)
 
-  const game = useGame(questions, (stats) => {
+  // Capa "¡TIEMPO FINALIZADO!" sobre la pantalla 04 (en desarrollo: ?screen=preguntas&timeup)
+  const [timeUp, setTimeUp] = useState(devParams.has('timeup'))
+
+  const game = useGame(questions, (stats, reason) => {
     setRanking((current) => addToRanking(current, { name: playerName, ...stats }))
     setResult(stats)
-    setScreen('resultados')
+    if (reason !== 'time') return setScreen('resultados')
+    setTimeUp(true)
   })
+
+  useEffect(() => {
+    if (!timeUp || devParams.has('timeup')) return
+    const timer = setTimeout(() => {
+      setTimeUp(false)
+      setScreen('resultados')
+    }, TIME_UP_MS)
+    return () => clearTimeout(timer)
+  }, [timeUp])
 
   // Vista previa en desarrollo: ?screen=preguntas arranca una partida directamente
   useEffect(() => {
@@ -97,6 +111,7 @@ export default function App() {
             playerName={playerName}
             score={game.stats.score}
             phoneRef={questionsPhoneRef}
+            timeUp={timeUp}
           />
         )}
         {(screen === 'nombre' || transitioning) && (

@@ -1,6 +1,7 @@
 import AnswerOption from '../components/AnswerOption.jsx'
 import FitText from '../components/FitText.jsx'
 import Timer from '../components/Timer.jsx'
+import TimeUpOverlay from '../components/TimeUpOverlay.jsx'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
 import lines from '../assets/decor/vertical-lines-2.svg'
 // Asset ya inclinado 5.38° y recortado por el borde derecho del frame: no se rota de nuevo
@@ -46,6 +47,7 @@ export default function Preguntas({
   playerName,
   score,
   phoneRef,
+  timeUp,
 }) {
   const result = feedback && FEEDBACK[feedback]
 
@@ -117,6 +119,8 @@ export default function Preguntas({
           <span className="text-[64px] font-bold leading-none">{formatScore(score)}</span>
         </span>
       </div>
+
+      {timeUp && <TimeUpOverlay />}
     </div>
   )
 }

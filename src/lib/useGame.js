@@ -38,11 +38,12 @@ export default function useGame(questions, onFinish) {
 
   const remaining = () => Math.max(0, GAME_DURATION_MS - (performance.now() - startedAt.current))
 
-  const finish = useCallback(() => {
+  // reason: 'time' si se agotó el reloj, 'completed' si respondió todas las preguntas
+  const finish = useCallback((reason) => {
     if (!running.current) return
     running.current = false
     stopTimers()
-    onFinishRef.current(statsRef.current)
+    onFinishRef.current(statsRef.current, reason)
   }, [])
 
   // Prepara una partida nueva (preguntas mezcladas, reloj lleno) sin arrancar el reloj
@@ -65,7 +66,7 @@ export default function useGame(questions, onFinish) {
     timers.current.tick = setInterval(() => {
       const left = remaining()
       setTimeLeftMs(left)
-      if (left === 0) finish()
+      if (left === 0) finish('time')
     }, TICK_MS)
   }, [finish])
 
@@ -84,7 +85,7 @@ export default function useGame(questions, onFinish) {
     setFeedback(isCorrect ? 'correct' : 'wrong')
 
     timers.current.feedback = setTimeout(() => {
-      if (index + 1 >= deck.length) return finish()
+      if (index + 1 >= deck.length) return finish('completed')
       setIndex(index + 1)
       setSelected(null)
       setFeedback(null)
