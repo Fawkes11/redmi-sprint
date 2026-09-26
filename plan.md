@@ -141,3 +141,13 @@ durante la implementación, no solo al final.
    recarga/reinicio, verificación de que el ranking persiste correctamente.
 6. **Checklist final de assets**: revisar que no queden pendientes marcados
    del cuadro de la sección 7 antes de empaquetar el build final.
+7. **Efectos especiales** (agregado durante el desarrollo, rama
+   `efectos-especiales`, en prueba):
+   - Confeti en Resultados solo la primera vez que se muestra, cuando el
+     jugador queda 1.º, 2.º o 3.º del ranking histórico; colores según el
+     puesto (oro, plata, bronce).
+   - Brillo que recorre los móviles (CSS).
+   - Fondo naranja animado con un shader WebGL en la pantalla de inicio,
+     con respaldo al gradiente estático si no hay WebGL.
+   - Destello de luz cuando el rodillo de "¡Tiempo finalizado!" se detiene.
+   - Validar rendimiento en un totem real antes de pasar a `main`.

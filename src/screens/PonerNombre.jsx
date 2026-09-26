@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import BrandButton from '../components/BrandButton.jsx'
 import VerticalLines from '../components/VerticalLines.jsx'
+import LiquidGradient from '../effects/LiquidGradient.jsx'
+import Shine from '../effects/Shine.jsx'
 import Icon from '../components/Icon.jsx'
 import arrowBack from '@material-symbols/svg-200/outlined/arrow_back.svg?raw'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
@@ -22,6 +24,7 @@ export default function PonerNombre({ onBack, onContinue, validate, phoneRef }) 
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-brand-gradient-v">
+      <LiquidGradient className="absolute inset-0" />
       {/* Líneas verticales (grupo de 980×1957 en X 50, Y -939), detrás de todo */}
       <VerticalLines x={50} y={-939} />
 
@@ -72,7 +75,7 @@ export default function PonerNombre({ onBack, onContinue, validate, phoneRef }) 
       {/* Detalle inferior: círculos blancos superpuestos detrás del móvil */}
       <div className="absolute left-[-389px] top-[1571px] size-[1816px] rounded-full bg-paper shadow-soft" />
       <div className="absolute left-[-184px] top-[1777px] size-[1406px] rounded-full bg-paper shadow-soft" />
-      <img draggable={false} ref={phoneRef} src={phone} alt="" className="absolute left-[-2px] top-[1014px] max-w-none" />
+      <Shine imgRef={phoneRef} src={phone} className="absolute left-[-2px] top-[1014px]" delay={0.8} />
     </div>
   )
 }

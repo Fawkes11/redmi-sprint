@@ -38,7 +38,7 @@ export default function TimeUpOverlay() {
 
       {/* Rodillo: la columna completa se repite 3 veces; la animación la baja dos columnas (dos vueltas)
           y se detiene con el texto sólido en el centro */}
-      <div data-reel-strip className="absolute inset-x-0" style={{ top: COLUMN_TOP }}>
+      <div data-reel-strip className="absolute inset-x-0 will-change-transform" style={{ top: COLUMN_TOP }}>
         {[0, 1, 2].map((copy) => (
           <div key={copy} aria-hidden={copy > 0}>
             {BLOCKS.map((kind, i) => (
@@ -50,8 +50,20 @@ export default function TimeUpOverlay() {
         ))}
       </div>
 
-      <img draggable={false} data-phone="top" src={phoneTop} alt="" className="absolute left-[499px] top-[-245px] max-w-none" />
-      <img draggable={false} data-phone="bottom" src={phoneBottom} alt="" className="absolute left-[-253px] top-[1130px] max-w-none" />
+      {/* Destello cuando el rodillo se detiene (ver timeUpEnter) */}
+      <div
+        data-flash
+        className="will-change-[opacity,transform] pointer-events-none absolute inset-0 opacity-0"
+        style={{ background: 'radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.9), rgb(255 240 200 / 0.35) 30%, transparent 60%)' }}
+      />
+      <div
+        data-rays
+        className="will-change-[opacity,transform] pointer-events-none absolute left-1/2 top-1/2 size-[2400px] -translate-x-1/2 -translate-y-1/2 opacity-0"
+        style={{ background: 'repeating-conic-gradient(rgb(255 255 255 / 0.18) 0deg 6deg, transparent 6deg 18deg)', maskImage: 'radial-gradient(circle, #000 10%, transparent 45%)' }}
+      />
+
+      <img draggable={false} data-phone="top" src={phoneTop} alt="" className="will-change-transform absolute left-[499px] top-[-245px] max-w-none" />
+      <img draggable={false} data-phone="bottom" src={phoneBottom} alt="" className="will-change-transform absolute left-[-253px] top-[1130px] max-w-none" />
     </div>
   )
 }

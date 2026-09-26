@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BrandButton from '../components/BrandButton.jsx'
 import Icon from '../components/Icon.jsx'
 import ScrollingText from '../components/ScrollingText.jsx'
+import Shine from '../effects/Shine.jsx'
+import { celebratePlace } from '../effects/celebrate.js'
 import arrowDown from '@material-symbols/svg-200/outlined/keyboard_arrow_down.svg?raw'
 import arrowUp from '@material-symbols/svg-200/outlined/keyboard_arrow_up.svg?raw'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
@@ -91,12 +93,15 @@ export default function Resultados({ playerName, score, answered, total, ranking
   const [expanded, setExpanded] = useState(false)
   const canExpand = ranking.length > VISIBLE_ROWS
 
+  // Confeti al entrar, solo si el jugador quedó en el top 3 (los nombres son únicos en el ranking)
+  useEffect(() => celebratePlace(ranking.findIndex((entry) => entry.name === playerName)), [])
+
   return (
     <div className="absolute inset-0 overflow-hidden bg-brand-gradient-v">
       {/* Círculos superiores: el grande al fondo y el pequeño encima */}
       <div className="absolute left-[-291px] top-[-1174px] size-[1688px] rounded-full bg-ink-soft" />
       <div className="absolute left-[-141px] top-[-1072px] size-[1362px] rounded-full bg-ink-soft shadow-deep" />
-      <img draggable={false} src={phone} alt="" className="absolute left-0 top-[23px] max-w-none" />
+      <Shine src={phone} className="absolute left-0 top-[23px]" delay={0.5} />
 
       <img draggable={false} src={xiaomiLogo} alt="Xiaomi" className="absolute left-[474.15px] top-[323px] size-[131px] max-w-none" />
 

@@ -42,11 +42,18 @@ export function timeUpEnter(root) {
   enterFromCorner(timeline, q('[data-phone="top"]'), 1, -1, 0.1)
   enterFromCorner(timeline, q('[data-phone="bottom"]'), -1, 1, 0.22)
 
-  return timeline.fromTo(
+  timeline.fromTo(
     q('[data-reel-strip]'),
     // Dos vueltas = subir la tira dos columnas y dejarla bajar hasta la primera
     { y: (_, strip) => -2 * strip.lastElementChild.offsetHeight },
     { y: 0, duration: 1.6, ease: 'back.out(1.1)' },
     0.2,
   )
+
+  // Destello y rayos de luz cuando el rodillo se detiene (~1.1 s: fin del frenado antes del rebote)
+  return timeline
+    .fromTo(q('[data-flash]'), { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1.1, duration: 0.18, ease: 'power2.out' }, 1.1)
+    .to(q('[data-flash]'), { opacity: 0, duration: 0.7, ease: 'power2.in' }, 1.28)
+    .fromTo(q('[data-rays]'), { opacity: 0, rotation: 0 }, { opacity: 1, rotation: 25, duration: 0.25, ease: 'power2.out' }, 1.1)
+    .to(q('[data-rays]'), { opacity: 0, rotation: 60, duration: 1.1, ease: 'power2.out' }, 1.35)
 }
