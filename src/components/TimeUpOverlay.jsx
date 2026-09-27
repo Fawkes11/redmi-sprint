@@ -50,16 +50,18 @@ export default function TimeUpOverlay() {
         ))}
       </div>
 
-      {/* Destello cuando el rodillo se detiene (ver timeUpEnter) */}
+      {/* Destello cuando el rodillo se detiene (ver timeUpEnter). Ambas capas arrancan en opacidad
+          0.001 (no 0): así Chrome las rasteriza de antemano y no pinta un cuadro blanco (capa aún
+          sin rasterizar) en el primer cuadro en que se hacen visibles */}
       <div
         data-flash
-        className="will-change-[opacity,transform] pointer-events-none absolute inset-0 opacity-0"
+        className="will-change-[opacity,transform] pointer-events-none absolute inset-0 opacity-[0.001]"
         style={{ background: 'radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.9), rgb(255 240 200 / 0.35) 30%, transparent 60%)' }}
       />
       <div
         data-rays
-        className="will-change-[opacity,transform] pointer-events-none absolute left-1/2 top-1/2 size-[2400px] -translate-x-1/2 -translate-y-1/2 opacity-0"
-        style={{ background: 'repeating-conic-gradient(rgb(255 255 255 / 0.18) 0deg 6deg, transparent 6deg 18deg)', maskImage: 'radial-gradient(circle, #000 10%, transparent 45%)' }}
+        className="will-change-[opacity,transform] pointer-events-none absolute left-1/2 top-1/2 size-[1400px] -translate-x-1/2 -translate-y-1/2 opacity-[0.001]"
+        style={{ background: 'repeating-conic-gradient(rgb(255 255 255 / 0.18) 0deg 6deg, transparent 6deg 18deg)', maskImage: 'radial-gradient(circle, #000 15%, transparent 70%)' }}
       />
 
       <img draggable={false} data-phone="top" src={phoneTop} alt="" className="will-change-transform absolute left-[499px] top-[-245px] max-w-none" />
