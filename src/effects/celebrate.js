@@ -1,4 +1,5 @@
 import confetti from 'canvas-confetti'
+import { effectsEnabled } from './enabled.js'
 
 // Colores de confeti por puesto (tomados de las medallas de oro, plata y bronce)
 const PALETTES = [
@@ -11,7 +12,7 @@ const PALETTES = [
 // Devuelve una función que limpia el confeti (al salir de la pantalla).
 export function celebratePlace(place) {
   const colors = PALETTES[place]
-  if (!colors) return () => {}
+  if (!colors || !effectsEnabled) return () => {}
 
   const burst = (particleCount, spread) => {
     confetti({ particleCount, spread, angle: 60, origin: { x: 0, y: 0.75 }, colors, startVelocity: 65 })

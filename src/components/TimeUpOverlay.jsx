@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import VerticalLines from './VerticalLines.jsx'
+import { effectsEnabled } from '../effects/enabled.js'
 import { timeUpEnter } from '../lib/transitions.js'
 import phoneTop from '../assets/devices/mobile-7-screen-4a.png'
 import phoneBottom from '../assets/devices/mobile-6-screen-4a.png'
@@ -53,16 +54,20 @@ export default function TimeUpOverlay() {
       {/* Destello cuando el rodillo se detiene (ver timeUpEnter). Ambas capas arrancan en opacidad
           0.001 (no 0): así Chrome las rasteriza de antemano y no pinta un cuadro blanco (capa aún
           sin rasterizar) en el primer cuadro en que se hacen visibles */}
-      <div
-        data-flash
-        className="will-change-[opacity,transform] pointer-events-none absolute inset-0 opacity-[0.001]"
-        style={{ background: 'radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.9), rgb(255 240 200 / 0.35) 30%, transparent 60%)' }}
-      />
-      <div
-        data-rays
-        className="will-change-[opacity,transform] pointer-events-none absolute left-1/2 top-1/2 size-[1400px] -translate-x-1/2 -translate-y-1/2 opacity-[0.001]"
-        style={{ background: 'repeating-conic-gradient(rgb(255 255 255 / 0.18) 0deg 6deg, transparent 6deg 18deg)', maskImage: 'radial-gradient(circle, #000 15%, transparent 70%)' }}
-      />
+      {effectsEnabled && (
+        <>
+          <div
+            data-flash
+            className="will-change-[opacity,transform] pointer-events-none absolute inset-0 opacity-[0.001]"
+            style={{ background: 'radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.9), rgb(255 240 200 / 0.35) 30%, transparent 60%)' }}
+          />
+          <div
+            data-rays
+            className="will-change-[opacity,transform] pointer-events-none absolute left-1/2 top-1/2 size-[1400px] -translate-x-1/2 -translate-y-1/2 opacity-[0.001]"
+            style={{ background: 'repeating-conic-gradient(rgb(255 255 255 / 0.18) 0deg 6deg, transparent 6deg 18deg)', maskImage: 'radial-gradient(circle, #000 15%, transparent 70%)' }}
+          />
+        </>
+      )}
 
       <img draggable={false} data-phone="top" src={phoneTop} alt="" className="will-change-transform absolute left-[499px] top-[-245px] max-w-none" />
       <img draggable={false} data-phone="bottom" src={phoneBottom} alt="" className="will-change-transform absolute left-[-253px] top-[1130px] max-w-none" />

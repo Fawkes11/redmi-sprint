@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { effectsEnabled } from './enabled.js'
 
 // Fondo naranja "vivo": shader WebGL que ondula lento entre los dos colores del gradiente de marca.
 // Se dibuja a media resolución para no cargar la GPU del totem. Si no hay WebGL, el contenedor
@@ -37,6 +38,7 @@ export default function LiquidGradient({ className = '', fallback = 'bg-brand-gr
 
   useEffect(() => {
     const canvas = canvasRef.current
+    if (!canvas) return
     const gl = canvas.getContext('webgl', { antialias: false, alpha: false })
     if (!gl) return // sin WebGL queda el gradiente de respaldo
 
@@ -81,7 +83,7 @@ export default function LiquidGradient({ className = '', fallback = 'bg-brand-gr
 
   return (
     <div className={`${fallback} ${className}`}>
-      <canvas ref={canvasRef} className="block size-full" />
+      {effectsEnabled && <canvas ref={canvasRef} className="block size-full" />}
     </div>
   )
 }

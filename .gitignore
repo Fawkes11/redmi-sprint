@@ -16,5 +16,5 @@ PENDIENTES-FIGMA.md
 Thumbs.db
 
 # Paquete para los totems (npm run paquete)
-dist-kiosko
-Trivia-REDMI.zip
+dist-kiosko/
+Trivia-REDMI*.zip
