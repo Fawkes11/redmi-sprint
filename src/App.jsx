@@ -96,7 +96,7 @@ export default function App() {
   return (
     <>
       <Stage>
-        {screen === 'inicio' && <Inicio onStart={() => setScreen('tutorial')} />}
+        {screen === 'inicio' && <Inicio onStart={() => setScreen('tutorial')} onRanking={() => setScreen('ranking')} />}
         {screen === 'tutorial' && <Tutorial onContinue={() => setScreen('nombre')} />}
         {screen === 'preguntas' && game.question && (
           <Preguntas
@@ -123,6 +123,9 @@ export default function App() {
               phoneRef={namePhoneRef}
             />
           </div>
+        )}
+        {screen === 'ranking' && (
+          <Resultados view="ranking" total={questions.length} ranking={ranking} onFinish={() => setScreen('inicio')} />
         )}
         {screen === 'resultados' && (
           <Resultados

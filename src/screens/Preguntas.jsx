@@ -5,7 +5,7 @@ import TimeUpOverlay from '../components/TimeUpOverlay.jsx'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
 import lines from '../assets/decor/vertical-lines-2.svg'
 // Asset ya inclinado 5.38° y recortado por el borde derecho del frame: no se rota de nuevo
-import phone from '../assets/devices/mobile-4-screen.png'
+import phone from '../assets/devices/mobile-4-screen.png?format=webp&quality=85'
 
 const FEEDBACK = {
   correct: { lines: ['¡BUEN', 'TRABAJO!'], text: 'bg-brand-gradient' },
