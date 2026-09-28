@@ -75,41 +75,36 @@
   background-image: linear-gradient(90deg, var(--color-danger-from) 0%, var(--color-danger-to) 100%);
 }
 
-/* MiSans Latin (Fuentes de Figma). Los pesos internos del archivo no son estándar,
-   así que se asignan por nombre para que coincidan con las clases de Tailwind. */
+/* MiSans Latin (Fuentes de Figma) en WOFF2 (convertidas desde los .otf originales con fontTools).
+   Los pesos internos no son estándar, así que se asignan por nombre para que coincidan con las
+   clases de Tailwind. Medium (500) no se usa en la app y no se carga. */
 @font-face {
   font-family: 'MiSans Latin';
-  src: url('./assets/fonts/misans-latin/misans-latin-light.otf') format('opentype');
+  src: url('./assets/fonts/misans-latin/misans-latin-light.woff2') format('woff2');
   font-weight: 300;
   font-display: block;
 }
 @font-face {
   font-family: 'MiSans Latin';
-  src: url('./assets/fonts/misans-latin/misans-latin-regular.otf') format('opentype');
+  src: url('./assets/fonts/misans-latin/misans-latin-regular.woff2') format('woff2');
   font-weight: 400;
   font-display: block;
 }
 @font-face {
   font-family: 'MiSans Latin';
-  src: url('./assets/fonts/misans-latin/misans-latin-medium.otf') format('opentype');
-  font-weight: 500;
-  font-display: block;
-}
-@font-face {
-  font-family: 'MiSans Latin';
-  src: url('./assets/fonts/misans-latin/misans-latin-semibold.otf') format('opentype');
+  src: url('./assets/fonts/misans-latin/misans-latin-semibold.woff2') format('woff2');
   font-weight: 600;
   font-display: block;
 }
 @font-face {
   font-family: 'MiSans Latin';
-  src: url('./assets/fonts/misans-latin/misans-latin-bold.otf') format('opentype');
+  src: url('./assets/fonts/misans-latin/misans-latin-bold.woff2') format('woff2');
   font-weight: 700;
   font-display: block;
 }
 @font-face {
   font-family: 'MiSans Latin';
-  src: url('./assets/fonts/misans-latin/misans-latin-heavy.otf') format('opentype');
+  src: url('./assets/fonts/misans-latin/misans-latin-heavy.woff2') format('woff2');
   font-weight: 900;
   font-display: block;
 }

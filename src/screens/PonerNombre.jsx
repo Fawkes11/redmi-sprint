@@ -8,7 +8,7 @@ import arrowBack from '@material-symbols/svg-200/outlined/arrow_back.svg?raw'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
 // Figma: capa de 1040×1259 en X 18, Y 1034 (ya rotada). El PNG mide 1080×1351 porque incluye
 // el margen de la sombra (20px a los lados y arriba), por eso se ubica en X -2, Y 1014
-import phone from '../assets/devices/mobile-3-screen.png'
+import phone from '../assets/devices/mobile-3-screen.png?format=webp&quality=85'
 
 // 03 — Poner nombre (Figma 539:23). `validate(nombre)` devuelve el mensaje de error o null.
 export default function PonerNombre({ onBack, onContinue, validate, phoneRef }) {

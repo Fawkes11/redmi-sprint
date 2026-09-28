@@ -3,8 +3,8 @@ import gsap from 'gsap'
 import VerticalLines from './VerticalLines.jsx'
 import { effectsEnabled } from '../effects/enabled.js'
 import { timeUpEnter } from '../lib/transitions.js'
-import phoneTop from '../assets/devices/mobile-7-screen-4a.png'
-import phoneBottom from '../assets/devices/mobile-6-screen-4a.png'
+import phoneTop from '../assets/devices/mobile-7-screen-4a.png?format=webp&quality=85'
+import phoneBottom from '../assets/devices/mobile-6-screen-4a.png?format=webp&quality=85'
 
 // Columna de 5 bloques de dos líneas (MiSans Heavy 128, interlineado 97.7%) cada 360px desde Y 115;
 // el del centro es el sólido y el resto solo contorno

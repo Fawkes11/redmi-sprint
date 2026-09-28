@@ -4,19 +4,26 @@ import Icon from '../components/Icon.jsx'
 import ScrollingText from '../components/ScrollingText.jsx'
 import Shine from '../effects/Shine.jsx'
 import { celebratePlace } from '../effects/celebrate.js'
+import { exportRanking } from '../lib/exportRanking.js'
 import arrowDown from '@material-symbols/svg-200/outlined/keyboard_arrow_down.svg?raw'
 import arrowUp from '@material-symbols/svg-200/outlined/keyboard_arrow_up.svg?raw'
+import download from '@material-symbols/svg-200/outlined/download.svg?raw'
 import xiaomiLogo from '../assets/brand/xiaomi-logo.svg'
 // Recorte visible (1080×706) de la imagen de Figma de 1410×706 en X -164, Y 23
-import phone from '../assets/devices/mobile-5-screen.png'
-import gold from '../assets/ranking/gold.png'
-import silver from '../assets/ranking/silver.png'
-import bronze from '../assets/ranking/bronze.png'
-import trophy from '../assets/ranking/trophy.png'
+import phone from '../assets/devices/mobile-5-screen.png?format=webp&quality=85'
+import gold from '../assets/ranking/gold.png?format=webp&quality=85'
+import silver from '../assets/ranking/silver.png?format=webp&quality=85'
+import bronze from '../assets/ranking/bronze.png?format=webp&quality=85'
+import trophy from '../assets/ranking/trophy.png?format=webp&quality=85'
 
 const MEDALS = [gold, silver, bronze]
 const ROW_HEIGHT = 66
-const VISIBLE_ROWS = 7
+// Resultados: tabla de Figma (Y 1032, 7 filas). Vista de ranking desde Inicio: sin nombre ni cajas
+// de puntaje, la tabla sube y muestra más filas.
+const LAYOUTS = {
+  results: { top: 1032, rows: 7 },
+  ranking: { top: 660, rows: 12 },
+}
 // Margen a cada lado de la tabla para medallas (izquierda) e insignia MASTER (derecha)
 const SIDE_LEFT = 53
 const SIDE_RIGHT = 165
@@ -62,17 +69,17 @@ function RankingRow({ entry, index, total }) {
 // Tabla "RANKING EN VIVO" (Figma: 687×575 en X 197, Y 1032; cabecera de 113 y filas de 66).
 // Expandida, las filas hacen scroll dentro del mismo alto; el contenedor de scroll se extiende
 // a los lados para no recortar medallas ni la insignia MASTER.
-function Ranking({ entries, total, expanded }) {
-  const rows = expanded ? entries : entries.slice(0, VISIBLE_ROWS)
+function Ranking({ entries, total, expanded, top, visibleRows }) {
+  const rows = expanded ? entries : entries.slice(0, visibleRows)
   return (
-    <div className="absolute left-[197px] top-[1032px] w-[687px]">
+    <div className="absolute left-[197px] w-[687px]" style={{ top }}>
       <div className="flex h-[113px] items-center justify-center rounded-t-[20px] bg-brand-gradient text-[32px] font-bold text-paper-white">
         RANKING EN VIVO
       </div>
       <div
         className={`scrollbar-brand overflow-x-hidden ${expanded ? 'overflow-y-auto' : 'overflow-y-hidden'}`}
         style={{
-          height: ROW_HEIGHT * VISIBLE_ROWS,
+          height: ROW_HEIGHT * visibleRows,
           marginLeft: -SIDE_LEFT,
           width: 687 + SIDE_LEFT + SIDE_RIGHT + SCROLLBAR_SPACE,
           paddingLeft: SIDE_LEFT,
@@ -89,12 +96,18 @@ function Ranking({ entries, total, expanded }) {
 }
 
 // 05 — Resultados (Figma 515:1132). "RESPUESTAS" cuenta todas las respuestas dadas.
-export default function Resultados({ playerName, score, answered, total, ranking, onFinish }) {
+// view="ranking": la misma pantalla abierta desde Inicio, solo con el ranking (sin jugador ni confeti).
+export default function Resultados({ view = 'results', playerName, score, answered, total, ranking, onFinish }) {
   const [expanded, setExpanded] = useState(false)
-  const canExpand = ranking.length > VISIBLE_ROWS
+  const rankingOnly = view === 'ranking'
+  const layout = LAYOUTS[view]
+  const canExpand = ranking.length > layout.rows
 
   // Confeti al entrar, solo si el jugador quedó en el top 3 (los nombres son únicos en el ranking)
-  useEffect(() => celebratePlace(ranking.findIndex((entry) => entry.name === playerName)), [])
+  useEffect(() => {
+    if (rankingOnly) return
+    return celebratePlace(ranking.findIndex((entry) => entry.name === playerName))
+  }, [])
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-brand-gradient-v">
@@ -106,12 +119,18 @@ export default function Resultados({ playerName, score, answered, total, ranking
       <img draggable={false} src={xiaomiLogo} alt="Xiaomi" className="absolute left-[474.15px] top-[323px] size-[131px] max-w-none" />
 
       <div className="absolute inset-x-0 top-[548px] flex flex-col items-center text-paper-white">
-        <p className="text-[64px] font-bold leading-none">RESULTADOS</p>
-        {/* Nombres largos: se recorren de izquierda a derecha; tocar para repetir */}
-        <ScrollingText className="mt-[14px] max-w-[1000px] text-[128px] font-black leading-none">{playerName}</ScrollingText>
+        {rankingOnly ? (
+          <p className="text-[64px] font-bold leading-none">RANKING</p>
+        ) : (
+          <>
+            <p className="text-[64px] font-bold leading-none">RESULTADOS</p>
+            {/* Nombres largos: se recorren de izquierda a derecha; tocar para repetir */}
+            <ScrollingText className="mt-[14px] max-w-[1000px] text-[128px] font-black leading-none">{playerName}</ScrollingText>
+          </>
+        )}
       </div>
 
-      {[
+      {!rankingOnly && [
         { label: 'PUNTAJE', value: formatScore(score), left: 227 },
         { label: 'RESPUESTAS', value: `${answered}/${total}`, left: 545 },
       ].map((stat) => (
@@ -123,7 +142,7 @@ export default function Resultados({ playerName, score, answered, total, ranking
         </div>
       ))}
 
-      <Ranking entries={ranking} total={total} expanded={expanded} />
+      <Ranking entries={ranking} total={total} expanded={expanded} top={layout.top} visibleRows={layout.rows} />
 
       {canExpand && (
         <button
@@ -136,8 +155,20 @@ export default function Resultados({ playerName, score, answered, total, ranking
         </button>
       )}
 
+      {/* Exportar el ranking (misma forma que el botón de ranking de Inicio, esquina superior derecha) */}
+      {rankingOnly && (
+        <button
+          type="button"
+          onClick={() => exportRanking(ranking)}
+          aria-label="Exportar ranking"
+          className="absolute right-[48px] top-[48px] flex size-[96px] items-center justify-center rounded-full bg-brand-gradient text-paper-white shadow-soft active:brightness-95"
+        >
+          <Icon svg={download} size={48} />
+        </button>
+      )}
+
       <BrandButton variant="light" onClick={onFinish} className="absolute left-[285px] top-[1725px]">
-        FINALIZAR
+        {rankingOnly ? 'VOLVER AL INICIO' : 'FINALIZAR'}
       </BrandButton>
     </div>
   )
