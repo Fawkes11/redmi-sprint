@@ -33,6 +33,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: './',
+    // public/ trae los PHP del servidor: van en el build web (cPanel), no en el paquete local
+    publicDir: kiosko ? false : 'public',
     plugins: [
       stripDevTools,
       react(),

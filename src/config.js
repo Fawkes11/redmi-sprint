@@ -6,3 +6,7 @@ export const TIME_UP_MS = 4_000 // capa "¡TIEMPO FINALIZADO!" (animación inclu
 // Puntaje: acierto = base + bono proporcional al tiempo restante; error = 0
 export const BASE_POINTS = 100
 export const MAX_SPEED_BONUS = 50
+
+// Servidor donde se guardan los rankings exportados (cPanel). Se usa con URL completa para que
+// también funcione desde el paquete local (index.html abierto como archivo).
+export const EXPORT_SERVER = 'https://redmi-sprint.msmarketingco.com'

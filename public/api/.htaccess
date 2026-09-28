@@ -1,0 +1,4 @@
+# _comun.php solo se incluye desde otros scripts
+<Files "_comun.php">
+  Require all denied
+</Files>

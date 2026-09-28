@@ -151,3 +151,12 @@ durante la implementación, no solo al final.
      con respaldo al gradiente estático si no hay WebGL.
    - Destello de luz cuando el rodillo de "¡Tiempo finalizado!" se detiene.
    - Validar rendimiento en un totem real antes de pasar a `main`.
+8. **Export del ranking a cPanel** (agregado durante el desarrollo):
+   - Desde la vista de ranking (botón en Inicio) se exporta al servidor del subdominio.
+   - Cada totem tiene su propia clave (`npm run configurar-servidor`), que lo identifica;
+     el servidor suma solo las partidas nuevas (por id de partida), guarda `actual.csv`
+     y `anterior.csv` (copia de seguridad) por totem y nunca borra lo ya recibido.
+   - Descarga en `/exportes-admin/` con PIN de 6 dígitos (bloqueo tras 5 intentos),
+     un archivo por totem y un consolidado de todos. El QR del totem abre esa página.
+   - Responde §9 (consolidación): se consolidan solo en la descarga; cada totem sigue
+     mostrando únicamente su propio ranking (§8 se mantiene: no hay sincronización).

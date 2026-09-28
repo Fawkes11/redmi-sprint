@@ -4,7 +4,7 @@ import Icon from '../components/Icon.jsx'
 import ScrollingText from '../components/ScrollingText.jsx'
 import Shine from '../effects/Shine.jsx'
 import { celebratePlace } from '../effects/celebrate.js'
-import { exportRanking } from '../lib/exportRanking.js'
+import ExportDialog from '../components/ExportDialog.jsx'
 import arrowDown from '@material-symbols/svg-200/outlined/keyboard_arrow_down.svg?raw'
 import arrowUp from '@material-symbols/svg-200/outlined/keyboard_arrow_up.svg?raw'
 import download from '@material-symbols/svg-200/outlined/download.svg?raw'
@@ -99,6 +99,7 @@ function Ranking({ entries, total, expanded, top, visibleRows }) {
 // view="ranking": la misma pantalla abierta desde Inicio, solo con el ranking (sin jugador ni confeti).
 export default function Resultados({ view = 'results', playerName, score, answered, total, ranking, onFinish }) {
   const [expanded, setExpanded] = useState(false)
+  const [exporting, setExporting] = useState(false)
   const rankingOnly = view === 'ranking'
   const layout = LAYOUTS[view]
   const canExpand = ranking.length > layout.rows
@@ -159,7 +160,7 @@ export default function Resultados({ view = 'results', playerName, score, answer
       {rankingOnly && (
         <button
           type="button"
-          onClick={() => exportRanking(ranking)}
+          onClick={() => setExporting(true)}
           aria-label="Exportar ranking"
           className="absolute right-[48px] top-[48px] flex size-[96px] items-center justify-center rounded-full bg-brand-gradient text-paper-white shadow-soft active:brightness-95"
         >
@@ -170,6 +171,8 @@ export default function Resultados({ view = 'results', playerName, score, answer
       <BrandButton variant="light" onClick={onFinish} className="absolute left-[285px] top-[1725px]">
         {rankingOnly ? 'VOLVER AL INICIO' : 'FINALIZAR'}
       </BrandButton>
+
+      {exporting && <ExportDialog ranking={ranking} onClose={() => setExporting(false)} />}
     </div>
   )
 }
