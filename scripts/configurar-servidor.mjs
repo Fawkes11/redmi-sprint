@@ -1,7 +1,8 @@
 // Genera el config.php del servidor (va en cPanel FUERA de la carpeta pública del subdominio).
 //
 //   Crear:            npm run configurar-servidor -- 482913 "Totem Andino" "Totem Unicentro 1"
-//   Agregar totems:   npm run configurar-servidor -- --agregar "Totem Santafe"
+//   Agregar totems:   npm run configurar-servidor -- agregar "Totem Santafe"
+//                     (también funciona "--agregar", en PowerShell y en Bash)
 //
 // - PIN de descarga (6 dígitos): solo se guarda su hash (bcrypt).
 // - Cada totem recibe su propia clave de 16 caracteres, asociada a su nombre. Esa clave es su
@@ -30,12 +31,16 @@ const args = process.argv.slice(2)
 let pinHash
 let totems = {} // clave => nombre
 
-if (args[0] === '--agregar') {
+// Modo agregar: "agregar" o "--agregar". En PowerShell, npm se queda con "--agregar" como opción
+// propia y no lo pasa al script; en ese caso llega como la variable npm_config_agregar.
+const agregar = ['agregar', '--agregar'].includes(args[0]) || process.env.npm_config_agregar === 'true'
+if (agregar) {
   if (!existsSync(RUTA)) salir(`No existe ${RUTA}. Primero créalo con el PIN y los totems.`)
   const actual = readFileSync(RUTA, 'utf8')
   pinHash = actual.match(/'pin_hash' => '([^']+)'/)?.[1]
   for (const [, clave, nombre] of actual.matchAll(/'([A-Z0-9]{16})' => '((?:[^'\\]|\\.)*)'/g)) totems[clave] = nombre.replace(/\\'/g, "'")
-  args.shift()
+  if (!pinHash) salir(`${RUTA} no tiene PIN: vuelve a crearlo con el PIN y los totems.`)
+  if (['agregar', '--agregar'].includes(args[0])) args.shift()
 } else {
   const pin = args.shift() ?? ''
   if (!/^\d{6}$/.test(pin)) salir('Uso: npm run configurar-servidor -- <PIN de 6 dígitos> "Nombre totem 1" "Nombre totem 2" ...')

@@ -1,4 +1,11 @@
-# _comun.php solo se incluye desde otros scripts
-<Files "_comun.php">
-  Require all denied
-</Files>
+# Los archivos que empiezan por "_" solo se incluyen desde otros scripts
+# (compatible con Apache 2.2 y 2.4)
+<FilesMatch "^_">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>

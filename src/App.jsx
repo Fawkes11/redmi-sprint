@@ -6,7 +6,7 @@ import PonerNombre from './screens/PonerNombre.jsx'
 import Preguntas from './screens/Preguntas.jsx'
 import Resultados from './screens/Resultados.jsx'
 import useGame from './lib/useGame.js'
-import { addToRanking, loadRanking, nameExists } from './lib/ranking.js'
+import { addToRanking, loadRanking, mergeIntoRanking, nameExists, removeFromRanking } from './lib/ranking.js'
 import { nameToQuestions } from './lib/transitions.js'
 import { TIME_UP_MS } from './config.js'
 import allQuestions from './data/questions.json'
@@ -24,7 +24,9 @@ const EMPTY_RESULT = { score: 0, answered: 0 }
 // Flujo de 5 pantallas manejado por estado interno (sin rutas).
 export default function App() {
   const [screen, setScreen] = useState(devParams.get('screen') || 'inicio')
-  const [playerName, setPlayerName] = useState(devParams.get('name') || '')
+  // En desarrollo, ?screen=preguntas salta la pantalla de nombre: se usa un nombre de prueba para no
+  // guardar partidas sin nombre en el ranking
+  const [playerName, setPlayerName] = useState(devParams.get('name') || (devParams.get('screen') === 'preguntas' ? 'Prueba' : ''))
   const [ranking, setRanking] = useState(loadRanking)
   const [result, setResult] = useState(EMPTY_RESULT)
   // Transición 03 → 04: la 03 queda montada encima de la 04 mientras dura la animación
@@ -125,7 +127,18 @@ export default function App() {
           </div>
         )}
         {screen === 'ranking' && (
-          <Resultados view="ranking" total={questions.length} ranking={ranking} onFinish={() => setScreen('inicio')} />
+          <Resultados
+            view="ranking"
+            total={questions.length}
+            ranking={ranking}
+            onFinish={() => setScreen('inicio')}
+            onRemove={(ids) => setRanking((current) => removeFromRanking(current, ids))}
+            onMerge={(partidas) => {
+              const merged = mergeIntoRanking(ranking, partidas)
+              setRanking(merged.ranking)
+              return merged.added
+            }}
+          />
         )}
         {screen === 'resultados' && (
           <Resultados

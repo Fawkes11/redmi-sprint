@@ -2,8 +2,11 @@
 // Recibe las partidas de un totem y las SUMA a las que ya tiene guardadas ese totem.
 // - Identidad: la firma HMAC dice qué totem envía (cada totem tiene su propia clave).
 // - Sin duplicados: cada partida tiene un id único; solo se agregan ids que el servidor no tenía.
+// - Las partidas eliminadas desde el totem (excluidas.json) nunca se vuelven a aceptar; se le
+//   devuelven al totem para que también las quite de su ranking local.
 // - Si no hay partidas nuevas, no se escribe nada.
-// - Si hay, el actual.csv pasa a anterior.csv (copia de seguridad) y se regenera actual.csv.
+// - Si hay, la lista actual pasa a anterior.json (copia de seguridad) y se guarda la nueva en
+//   partidas.json. El Excel se genera al descargar (exportes-admin).
 // Un totem con el ranking borrado no hace perder nada: lo ya recibido nunca se elimina.
 require __DIR__ . '/_comun.php';
 
@@ -11,49 +14,27 @@ const TAMANO_MAXIMO = 2 * 1024 * 1024;
 const ENVIOS_POR_HORA = 30;
 const PARTIDAS_MAXIMAS = 20000;
 
-// El paquete local (index.html abierto como archivo) tiene origen "null": se permite cualquier origen
-// porque la autorización real es la firma, no el origen.
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, X-Firma');
-header('Content-Type: application/json; charset=utf-8');
-header('X-Content-Type-Options: nosniff');
-header('Cache-Control: no-store');
+redmi_api_inicio();
 
-function responder(int $codigo, array $datos): void
-{
-    http_response_code($codigo);
-    echo json_encode($datos, JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') responder(204, []);
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') responder(405, ['error' => 'Método no permitido']);
-
-if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > TAMANO_MAXIMO) responder(413, ['error' => 'Envío demasiado grande']);
+if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > TAMANO_MAXIMO) redmi_responder(413, ['error' => 'Envío demasiado grande']);
 if (redmi_contar('envio:' . redmi_ip(), 3600, false) >= ENVIOS_POR_HORA) {
-    responder(429, ['error' => 'Demasiados envíos, intente más tarde']);
+    redmi_responder(429, ['error' => 'Demasiados envíos, intente más tarde']);
 }
 redmi_contar('envio:' . redmi_ip(), 3600, true);
 
 $cuerpo = file_get_contents('php://input', false, null, 0, TAMANO_MAXIMO + 1);
-if ($cuerpo === false || $cuerpo === '' || strlen($cuerpo) > TAMANO_MAXIMO) responder(400, ['error' => 'Contenido inválido']);
+if ($cuerpo === false || $cuerpo === '' || strlen($cuerpo) > TAMANO_MAXIMO) redmi_responder(400, ['error' => 'Contenido inválido']);
 
-// Qué totem es: el que tenga la clave con la que coincide la firma
-$firma = strtolower($_SERVER['HTTP_X_FIRMA'] ?? '');
-$totem = null;
-if (preg_match('/^[0-9a-f]{64}$/', $firma)) {
-    foreach (redmi_totems() as $clave => $nombre) {
-        if (hash_equals(hash_hmac('sha256', $cuerpo, $clave), $firma)) $totem = $nombre;
-    }
-}
-if ($totem === null) responder(403, ['error' => 'Clave del totem incorrecta']);
+$totem = redmi_totem_por_firma($cuerpo);
+if ($totem === null) redmi_responder(403, ['error' => 'Clave del totem incorrecta']);
 
 // Formato estricto: {"partidas": [{id, name, score, answered, correct, playedAt}, ...]}
 $datos = json_decode($cuerpo, true);
 $recibidas = $datos['partidas'] ?? null;
-if (!is_array($recibidas) || count($recibidas) > PARTIDAS_MAXIMAS) responder(422, ['error' => 'Formato de ranking inválido']);
+if (!is_array($recibidas) || count($recibidas) > PARTIDAS_MAXIMAS) redmi_responder(422, ['error' => 'Formato de ranking inválido']);
+// Una partida con datos incompletos (p. ej. sin nombre) se omite y se informa; no bloquea al resto
 $validas = [];
+$omitidas = 0;
 foreach ($recibidas as $p) {
     $ok = is_array($p)
         && is_string($p['id'] ?? null) && preg_match('/^[A-Za-z0-9-]{1,64}$/', $p['id'])
@@ -62,7 +43,10 @@ foreach ($recibidas as $p) {
     foreach (['score', 'answered', 'correct'] as $campo) {
         $ok = $ok && is_int($p[$campo] ?? null) && $p[$campo] >= 0 && $p[$campo] <= 1000000;
     }
-    if (!$ok) responder(422, ['error' => 'Partida inválida']);
+    if (!$ok) {
+        $omitidas++;
+        continue;
+    }
     $validas[$p['id']] = [
         'id' => $p['id'], 'name' => $p['name'], 'score' => $p['score'],
         'answered' => $p['answered'], 'correct' => $p['correct'], 'playedAt' => $p['playedAt'],
@@ -75,13 +59,14 @@ $carpeta = redmi_carpeta_totem($slug);
 $bloqueo = fopen($carpeta . '/.bloqueo', 'c');
 flock($bloqueo, LOCK_EX);
 
+$excluidasEnviadas = array_keys(array_intersect_key($validas, redmi_leer_excluidas($slug)));
+$validas = array_diff_key($validas, array_flip($excluidasEnviadas));
 $guardadas = redmi_leer_partidas($slug);
 $nuevas = array_diff_key($validas, $guardadas);
 
 if ($nuevas) {
     $todas = $guardadas + $nuevas;
-    if (is_file($carpeta . '/actual.csv')) rename($carpeta . '/actual.csv', $carpeta . '/anterior.csv');
-    redmi_escribir($carpeta . '/actual.csv', redmi_csv(array_values($todas)));
+    if ($guardadas) redmi_escribir($carpeta . '/anterior.json', json_encode($guardadas, JSON_UNESCAPED_UNICODE));
     redmi_escribir($carpeta . '/partidas.json', json_encode($todas, JSON_UNESCAPED_UNICODE));
 } else {
     $todas = $guardadas;
@@ -90,4 +75,7 @@ if ($nuevas) {
 flock($bloqueo, LOCK_UN);
 fclose($bloqueo);
 
-responder(200, ['totem' => $totem, 'slug' => $slug, 'nuevas' => count($nuevas), 'total' => count($todas)]);
+redmi_responder(200, [
+    'totem' => $totem, 'slug' => $slug, 'nuevas' => count($nuevas), 'total' => count($todas),
+    'omitidas' => $omitidas, 'excluidas' => $excluidasEnviadas,
+]);

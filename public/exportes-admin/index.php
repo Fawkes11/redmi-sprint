@@ -4,10 +4,8 @@
 // Seguridad: PIN guardado como hash, bloqueo por IP tras 5 intentos fallidos (15 min) y bloqueo
 // general tras 30 fallos en una hora (frena ataques repartidos), sesión que expira a los 30 min.
 require __DIR__ . '/../api/_comun.php';
+require __DIR__ . '/../api/_xlsx.php';
 
-const INTENTOS_POR_IP = 5;
-const INTENTOS_GLOBALES = 30;
-const BLOQUEO = 900;
 const SESION = 1800;
 
 // Fechas en hora de Colombia (lista y nombre del archivo descargado)
@@ -39,25 +37,20 @@ if (isset($_POST['salir'])) {
 }
 
 if (!$autenticado && isset($_POST['pin'])) {
-    $ip = redmi_ip();
-    if (redmi_contar('pin:' . $ip, BLOQUEO, false) >= INTENTOS_POR_IP || redmi_contar('pin:*', 3600, false) >= INTENTOS_GLOBALES) {
-        $error = 'Demasiados intentos. Espere unos minutos e intente de nuevo.';
-    } elseif (preg_match('/^\d{6}$/', $_POST['pin']) && password_verify($_POST['pin'], redmi_config()['pin_hash'])) {
-        redmi_limpiar('pin:' . $ip);
+    // Mismo PIN y mismos contadores de bloqueo que la administración del totem (ver _comun.php)
+    $resultado = redmi_verificar_pin($_POST['pin']);
+    if ($resultado === 'ok') {
         session_regenerate_id(true);
         $_SESSION['desde'] = time();
         header('Location: ./' . ($marcado ? '?totem=' . $marcado : ''));
         exit;
-    } else {
-        redmi_contar('pin:' . $ip, BLOQUEO, true);
-        redmi_contar('pin:*', 3600, true);
-        $error = 'PIN incorrecto.';
     }
+    $error = $resultado === 'bloqueado' ? 'Demasiados intentos. Espere unos minutos e intente de nuevo.' : 'PIN incorrecto.';
 }
 
-function enviar_csv(string $contenido, string $nombre): void
+function enviar_xlsx(string $contenido, string $nombre): void
 {
-    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment; filename="' . $nombre . '"');
     header('Content-Length: ' . strlen($contenido));
     echo $contenido;
@@ -74,24 +67,26 @@ if ($autenticado) {
         foreach ($totems as $slug => $nombre) {
             foreach (redmi_leer_partidas($slug) as $p) $todas[] = $p + ['totem' => $nombre];
         }
-        enviar_csv(redmi_csv($todas, true), "ranking-redmi-consolidado-$sello.csv");
+        enviar_xlsx(redmi_xlsx($todas, true), "ranking-redmi-consolidado-$sello.xlsx");
     }
 
     // Archivo de un totem: solo slugs configurados y solo "actual" o "anterior" (sin rutas libres)
     $slug = $_GET['descargar'] ?? '';
     $version = ($_GET['version'] ?? '') === 'anterior' ? 'anterior' : 'actual';
-    if (isset($totems[$slug]) && is_file($ruta = redmi_carpeta() . "/$slug/$version.csv")) {
-        enviar_csv(file_get_contents($ruta), "ranking-redmi-$slug" . ($version === 'anterior' ? '-anterior' : '') . "-$sello.csv");
+    $archivo = $version === 'anterior' ? 'anterior.json' : 'partidas.json';
+    if (isset($totems[$slug]) && is_file($ruta = redmi_carpeta() . "/$slug/$archivo")) {
+        $partidas = array_values(json_decode(file_get_contents($ruta), true) ?: []);
+        enviar_xlsx(redmi_xlsx($partidas), "ranking-redmi-$slug" . ($version === 'anterior' ? '-anterior' : '') . "-$sello.xlsx");
     }
 
     foreach ($totems as $slug => $nombre) {
-        $actual = redmi_carpeta() . "/$slug/actual.csv";
+        $actual = redmi_carpeta() . "/$slug/partidas.json";
         $lista[] = [
             'slug' => $slug,
             'nombre' => $nombre,
             'jugadores' => count(redmi_leer_partidas($slug)),
             'fecha' => is_file($actual) ? filemtime($actual) : null,
-            'anterior' => is_file(redmi_carpeta() . "/$slug/anterior.csv"),
+            'anterior' => is_file(redmi_carpeta() . "/$slug/anterior.json"),
         ];
     }
 }
@@ -146,7 +141,7 @@ $e = fn ($texto) => htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
         <div class="fila">
           <span><strong><?= $e($t['nombre']) ?></strong><br>
             <small><?= $t['fecha'] ? $e($t['jugadores'] . ' jugadores · ' . date('d/m/Y H:i', $t['fecha'])) : 'Sin exportaciones aún' ?></small></span>
-          <?php if ($t['fecha']): ?><a class="boton" href="./?descargar=<?= $e($t['slug']) ?>">Descargar</a><?php endif ?>
+          <?php if ($t['fecha']): ?><a class="boton" href="./?descargar=<?= $e($t['slug']) ?>">Descargar Excel</a><?php endif ?>
         </div>
         <?php if ($t['anterior']): ?>
           <a class="copia" href="./?descargar=<?= $e($t['slug']) ?>&amp;version=anterior">Copia de seguridad (exportación anterior)</a>
@@ -154,7 +149,7 @@ $e = fn ($texto) => htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
       </li>
     <?php endforeach ?>
   </ul>
-  <a class="boton" href="./?consolidado=1">Descargar todo consolidado</a>
+  <a class="boton" href="./?consolidado=1">Descargar todo consolidado (Excel)</a>
   <form method="post"><button class="salir" name="salir" value="1">Cerrar sesión</button></form>
 <?php endif ?>
 </main>

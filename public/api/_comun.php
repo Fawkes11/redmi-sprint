@@ -59,6 +59,61 @@ function redmi_leer_partidas(string $slug): array
     return is_file($ruta) ? (json_decode(file_get_contents($ruta), true) ?: []) : [];
 }
 
+// Partidas eliminadas desde el totem: id => {name, score, eliminada}. Nunca se vuelven a aceptar.
+function redmi_leer_excluidas(string $slug): array
+{
+    $ruta = redmi_carpeta_totem($slug) . '/excluidas.json';
+    return is_file($ruta) ? (json_decode(file_get_contents($ruta), true) ?: []) : [];
+}
+
+// Qué totem firmó el cuerpo: el que tenga la clave con la que coincide la firma HMAC (o null)
+function redmi_totem_por_firma(string $cuerpo): ?string
+{
+    $firma = strtolower($_SERVER['HTTP_X_FIRMA'] ?? '');
+    if (!preg_match('/^[0-9a-f]{64}$/', $firma)) return null;
+    foreach (redmi_totems() as $clave => $nombre) {
+        if (hash_equals(hash_hmac('sha256', $cuerpo, $clave), $firma)) return $nombre;
+    }
+    return null;
+}
+
+// PIN de 6 dígitos con bloqueo: 5 fallos por IP en 15 min o 30 fallos en total en una hora.
+// Lo usan la página de descarga y la administración del totem (mismos contadores).
+// Devuelve 'ok', 'incorrecto' o 'bloqueado'.
+function redmi_verificar_pin($pin): string
+{
+    $ip = redmi_ip();
+    if (redmi_contar('pin:' . $ip, 900, false) >= 5 || redmi_contar('pin:*', 3600, false) >= 30) return 'bloqueado';
+    if (is_string($pin) && preg_match('/^\d{6}$/', $pin) && password_verify($pin, redmi_config()['pin_hash'])) {
+        redmi_limpiar('pin:' . $ip);
+        return 'ok';
+    }
+    redmi_contar('pin:' . $ip, 900, true);
+    redmi_contar('pin:*', 3600, true);
+    return 'incorrecto';
+}
+
+// Cabeceras y respuesta de los endpoints que usa el totem. Se permite cualquier origen porque el
+// paquete local (index.html abierto como archivo) tiene origen "null"; la autorización es la firma.
+function redmi_api_inicio(): void
+{
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: POST, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type, X-Firma');
+    header('Content-Type: application/json; charset=utf-8');
+    header('X-Content-Type-Options: nosniff');
+    header('Cache-Control: no-store');
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') redmi_responder(204, []);
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') redmi_responder(405, ['error' => 'Método no permitido']);
+}
+
+function redmi_responder(int $codigo, array $datos): void
+{
+    http_response_code($codigo);
+    echo json_encode($datos, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 // Escritura atómica: se escribe un temporal y se renombra, así nunca queda un archivo a medias
 function redmi_escribir(string $ruta, string $contenido): void
 {
@@ -66,29 +121,6 @@ function redmi_escribir(string $ruta, string $contenido): void
     file_put_contents($temporal, $contenido, LOCK_EX);
     chmod($temporal, 0640);
     rename($temporal, $ruta);
-}
-
-// CSV para Excel en español: punto y coma, BOM UTF-8, mayor puntaje primero y, en empate, la
-// partida más reciente. Los nombres que empiezan como fórmula se neutralizan con un apóstrofo.
-function redmi_csv(array $partidas, bool $conTotem = false): string
-{
-    usort($partidas, fn ($a, $b) => [$b['score'], $b['playedAt']] <=> [$a['score'], $a['playedAt']]);
-    $celda = function ($valor) {
-        $valor = (string) $valor;
-        if (preg_match('/^[=+\-@\t\r]/', $valor)) $valor = "'" . $valor;
-        return '"' . str_replace('"', '""', $valor) . '"';
-    };
-    $zona = new DateTimeZone('America/Bogota');
-    $titulos = ['Puesto', 'Nombre', 'Puntaje', 'Respuestas', 'Aciertos', 'Fecha'];
-    if ($conTotem) $titulos[] = 'Totem';
-    $filas = [implode(';', array_map($celda, $titulos))];
-    foreach (array_values($partidas) as $i => $p) {
-        $fecha = (new DateTime($p['playedAt']))->setTimezone($zona)->format('d/m/Y H:i:s');
-        $fila = [$i + 1, $p['name'], $p['score'], $p['answered'], $p['correct'], $fecha];
-        if ($conTotem) $fila[] = $p['totem'];
-        $filas[] = implode(';', array_map($celda, $fila));
-    }
-    return "\xEF\xBB\xBF" . implode("\r\n", $filas);
 }
 
 // IP real del cliente: solo REMOTE_ADDR (las cabeceras tipo X-Forwarded-For se pueden falsificar)

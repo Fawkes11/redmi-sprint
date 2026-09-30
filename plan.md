@@ -158,5 +158,7 @@ durante la implementación, no solo al final.
      y `anterior.csv` (copia de seguridad) por totem y nunca borra lo ya recibido.
    - Descarga en `/exportes-admin/` con PIN de 6 dígitos (bloqueo tras 5 intentos),
      un archivo por totem y un consolidado de todos. El QR del totem abre esa página.
+   - Eliminar puntajes desde el totem (vista de ranking → Administrar, con el PIN validado por el
+     servidor): se borran del totem y del servidor y quedan en excluidas.json, así no reaparecen.
    - Responde §9 (consolidación): se consolidan solo en la descarga; cada totem sigue
      mostrando únicamente su propio ranking (§8 se mantiene: no hay sincronización).

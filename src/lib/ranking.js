@@ -20,6 +20,26 @@ export function nameExists(ranking, name) {
   return ranking.some((entry) => normalize(entry.name) === target)
 }
 
+// Quita partidas por id (eliminadas desde el modo administración) y devuelve el ranking actualizado
+export function removeFromRanking(ranking, ids) {
+  const updated = ranking.filter((entry) => !ids.includes(entry.id))
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+  return updated
+}
+
+// Suma partidas recuperadas del servidor que este totem no tenga (por id). Las que ya tiene no se
+// tocan. Devuelve { ranking, added }.
+export function mergeIntoRanking(ranking, partidas) {
+  const known = new Set(ranking.map((entry) => entry.id))
+  const incoming = partidas
+    .filter((p) => p && typeof p.id === 'string' && !known.has(p.id) && typeof p.name === 'string' && Number.isInteger(p.score))
+    .map(({ id, name, score, answered, correct, playedAt }) => ({ id, name, score, answered, correct, playedAt }))
+  if (!incoming.length) return { ranking, added: 0 }
+  const updated = [...ranking, ...incoming].sort(byRank)
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+  return { ranking: updated, added: incoming.length }
+}
+
 // Agrega la partida y devuelve el ranking actualizado y ordenado
 export function addToRanking(ranking, { name, score, answered, correct }) {
   const entry = {
