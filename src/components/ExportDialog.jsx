@@ -155,9 +155,9 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
         )}
 
         {/* Totem enlazado y opción para cambiarlo (si se escribió la clave de otro totem por error) */}
-        {['listo', 'local'].includes(state) && getTotemName() && (
+        {['listo', 'local'].includes(state) && getTotemKey() && (
           <p className="mt-[32px] text-[24px] leading-snug">
-            Enlazado como <strong>{getTotemName()}</strong> ·{' '}
+            Enlazado como <strong>{getTotemName() ?? 'totem sin nombre'}</strong> ·{' '}
             <button type="button" onClick={changeKey} className="font-semibold text-brand-orange-deep underline">
               Cambiar clave
             </button>

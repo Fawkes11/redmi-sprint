@@ -94,6 +94,7 @@ export async function uploadRanking(ranking) {
   const ids = ranking.map((entry) => entry.id)
   const last = JSON.parse(localStorage.getItem(LAST_STORAGE) || 'null')
   if (last?.key === key && ids.every((id) => last.ids.includes(id))) {
+    localStorage.setItem(NAME_STORAGE, last.totem)
     return { totem: last.totem, url: downloadPageUrl(last.slug), nuevas: 0, total: last.total, sinCambios: true }
   }
 
@@ -107,6 +108,8 @@ export async function uploadRanking(ranking) {
   }
 
   localStorage.setItem(LAST_STORAGE, JSON.stringify({ key, ids, slug: data.slug, totem: data.totem, total: data.total }))
+  // El nombre lo da el servidor: así también queda en los totems enlazados antes de la confirmación
+  localStorage.setItem(NAME_STORAGE, data.totem)
   return {
     totem: data.totem,
     url: downloadPageUrl(data.slug),
