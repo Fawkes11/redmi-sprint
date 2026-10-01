@@ -268,7 +268,7 @@ export default function Resultados({ view = 'results', playerName, score, answer
         {rankingOnly ? 'VOLVER AL INICIO' : 'FINALIZAR'}
       </BrandButton>
 
-      {exporting && <ExportDialog ranking={ranking} onExcluded={onRemove} onClose={() => setExporting(false)} />}
+      {exporting && <ExportDialog ranking={ranking} onExcluded={onRemove} onImport={onMerge} onClose={() => setExporting(false)} />}
       {adminDialog && (
         <AdminDialog
           mode={adminDialog.mode}

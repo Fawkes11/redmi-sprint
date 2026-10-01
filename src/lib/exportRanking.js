@@ -21,12 +21,19 @@ export function rankingCsv(ranking) {
   return '﻿' + [COLUMNS.map(([title]) => cell(title)).join(';'), ...rows].join('\r\n')
 }
 
-export function downloadCsv(csv) {
-  // Fecha y hora de Colombia en el nombre: ranking-redmi-2026-09-28-15-54.csv
+// Descarga en la carpeta "Descargas" con fecha y hora de Colombia en el nombre:
+// ranking-redmi-2026-09-28-15-54.csv. Devuelve el nombre del archivo.
+function download(content, suffix, type) {
   const stamp = new Date().toLocaleString('sv-SE', { timeZone: 'America/Bogota' }).slice(0, 16).replace(/[ :]/g, '-')
   const link = document.createElement('a')
-  link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }))
-  link.download = `ranking-redmi-${stamp}.csv`
+  link.href = URL.createObjectURL(new Blob([content], { type }))
+  link.download = `ranking-redmi-${stamp}${suffix}`
   link.click()
   setTimeout(() => URL.revokeObjectURL(link.href), 1000)
+  return link.download
 }
+
+export const downloadCsv = (csv) => download(csv, '.csv', 'text/csv;charset=utf-8')
+
+// Archivo de traslado (ver transferFile en uploadRanking.js)
+export const downloadTransfer = (json) => download(json, '-traslado.json', 'application/json')

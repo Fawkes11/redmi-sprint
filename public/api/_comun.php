@@ -5,6 +5,10 @@ if (basename($_SERVER['SCRIPT_FILENAME'] ?? '') === basename(__FILE__)) {
     exit;
 }
 
+// Avisos de PHP (p. ej. en otra versión del servidor) al registro de errores, nunca en la respuesta:
+// un aviso impreso antes del JSON hace que el totem no pueda leerla
+ini_set('display_errors', '0');
+
 // La configuración vive FUERA de la carpeta pública del subdominio (no hay URL que llegue a ella):
 // /home/<usuario>/redmi-config/config.php, al lado de la carpeta del subdominio.
 function redmi_config(): array

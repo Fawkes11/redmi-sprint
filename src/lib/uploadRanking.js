@@ -25,6 +25,8 @@ export const clearTotemKey = () => {
 const hex = (buffer) => [...new Uint8Array(buffer)].map((b) => b.toString(16).padStart(2, '0')).join('')
 
 const sign = async (bytes, key) => {
+  // Sin https (p. ej. http:// o una IP de la red local) el navegador no permite firmar: no es falta de internet
+  if (!crypto.subtle) throw new ExportError('servidor', 'Abra la trivia con https:// para exportar.')
   const cryptoKey = await crypto.subtle.importKey('raw', new TextEncoder().encode(key), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
   return hex(await crypto.subtle.sign('HMAC', cryptoKey, bytes))
 }
@@ -41,21 +43,31 @@ export class ExportError extends Error {
 // Petición firmada con la clave del totem. Devuelve el JSON si la respuesta es correcta.
 async function request(endpoint, key, payload) {
   const bytes = new TextEncoder().encode(JSON.stringify(payload))
+  const firma = await sign(bytes, key)
   let response
   try {
     response = await fetch(`${EXPORT_SERVER}/api/${endpoint}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Firma': await sign(bytes, key) },
+      headers: { 'Content-Type': 'application/json', 'X-Firma': firma },
       body: bytes,
     })
   } catch {
     throw new ExportError('red', 'Sin conexión con el servidor')
   }
-  const data = await response.json().catch(() => ({}))
+  const text = await response.text().catch(() => '')
+  let data
+  try {
+    data = JSON.parse(text)
+  } catch {
+    // No es la respuesta de la API: una página del firewall del hosting o de la red, o un aviso de PHP.
+    // Tampoco se trata un 403 así como clave incorrecta (se borraría la clave guardada).
+    const sample = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 80)
+    throw new ExportError('servidor', `Respuesta inesperada del servidor (${response.status}): «${sample || 'vacía'}». Puede ser un bloqueo de la red o del hosting.`)
+  }
   if (response.status === 403) throw new ExportError('clave', 'La clave del totem no es válida')
-  if (response.status === 401 || response.status === 429) throw new ExportError('pin', data.error || 'PIN incorrecto')
-  // Sin JSON (p. ej. un error 500 de PHP o del hosting): se muestra el código para diagnosticar
-  if (!response.ok || !data.totem) throw new ExportError('servidor', data.error || `Error del servidor (${response.status}).`)
+  if (response.status === 401 || response.status === 429) throw new ExportError('pin', data?.error || 'PIN incorrecto')
+  // Error de la API sin mensaje: se muestra el código para diagnosticar
+  if (!response.ok || !data?.totem) throw new ExportError('servidor', data?.error || `Error del servidor (${response.status}).`)
   return data
 }
 
@@ -85,6 +97,32 @@ export async function recoverRanking(pin) {
   return data.partidas ?? []
 }
 
+// Traslado sin internet (p. ej. una red que bloquea el servidor): archivo con las partidas firmado con
+// la clave del totem de destino. Solo lo acepta un totem con esa misma clave, así que también
+// comprueba sin servidor que se escribió la clave correcta.
+const TRANSFER_TYPE = 'redmi-traslado'
+const pick = ({ id, name, score, answered, correct, playedAt }) => ({ id, name, score, answered, correct, playedAt })
+
+export async function transferFile(ranking, key) {
+  const partidas = JSON.stringify(ranking.map(pick))
+  const firma = await sign(new TextEncoder().encode(partidas), normalizeKey(key))
+  return JSON.stringify({ tipo: TRANSFER_TYPE, partidas, firma })
+}
+
+// Devuelve las partidas del archivo si está firmado con esta clave
+export async function readTransferFile(text, key) {
+  let file = null
+  try {
+    file = JSON.parse(text)
+  } catch {
+    // no es JSON
+  }
+  if (file?.tipo !== TRANSFER_TYPE || typeof file.partidas !== 'string') throw new ExportError('archivo', 'Este archivo no es un traslado del ranking.')
+  const firma = await sign(new TextEncoder().encode(file.partidas), normalizeKey(key))
+  if (firma !== file.firma) throw new ExportError('clave', 'Este archivo se guardó con la clave de otro totem.')
+  return JSON.parse(file.partidas)
+}
+
 // Resultado: { totem, url, nuevas, total, omitidas, excluidas, sinCambios }
 export async function uploadRanking(ranking) {
   const key = getTotemKey()
@@ -98,7 +136,7 @@ export async function uploadRanking(ranking) {
     return { totem: last.totem, url: downloadPageUrl(last.slug), nuevas: 0, total: last.total, sinCambios: true }
   }
 
-  const partidas = ranking.map(({ id, name, score, answered, correct, playedAt }) => ({ id, name, score, answered, correct, playedAt }))
+  const partidas = ranking.map(pick)
   let data
   try {
     data = await post(key, partidas)

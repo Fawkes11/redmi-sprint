@@ -21,3 +21,14 @@ Trivia-REDMI*.zip
 
 # Configuración privada del servidor (npm run configurar-servidor): nunca al repositorio
 redmi-config/
+
+# Copias del ranking de los totems (npm run unir-rankings): tienen datos personales
+datos-ranking/
+prueba.js
+
+# Editores y variables de entorno locales
+.vscode/
+.idea/
+.env
+.env.*
+*.local

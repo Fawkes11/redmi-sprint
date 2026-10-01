@@ -1,8 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import QRCode from 'qrcode'
 import BrandButton from './BrandButton.jsx'
-import { downloadCsv, rankingCsv } from '../lib/exportRanking.js'
-import { clearTotemKey, getTotemKey, getTotemName, identifyTotem, setTotemKey, uploadRanking } from '../lib/uploadRanking.js'
+import { downloadCsv, downloadTransfer, rankingCsv } from '../lib/exportRanking.js'
+import {
+  clearTotemKey,
+  getTotemKey,
+  getTotemName,
+  identifyTotem,
+  readTransferFile,
+  setTotemKey,
+  transferFile,
+  uploadRanking,
+} from '../lib/uploadRanking.js'
 
 const Title = ({ children }) => (
   <p className="bg-brand-gradient bg-clip-text text-[48px] font-bold leading-none text-transparent">{children}</p>
@@ -11,7 +20,8 @@ const Title = ({ children }) => (
 // Exportar el ranking: envía las partidas firmadas al servidor (que suma solo las nuevas) y muestra
 // un QR a la página de descarga (protegida con PIN). La primera vez pide la clave de este totem y,
 // antes de enviar nada, confirma a qué totem pertenece. Sin internet, descarga el CSV aquí.
-export default function ExportDialog({ ranking, onExcluded, onClose }) {
+// Si la red no llega al servidor, las partidas se pueden pasar al totem con un archivo de traslado.
+export default function ExportDialog({ ranking, onExcluded, onImport, onClose }) {
   const [state, setState] = useState(getTotemKey() ? 'subiendo' : 'clave')
   const [keyInput, setKeyInput] = useState('')
   const [pending, setPending] = useState(null) // { key, totem } a confirmar
@@ -20,6 +30,37 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
   const [summary, setSummary] = useState('')
   // Respaldo local una sola vez, aunque se reintente varias veces
   const savedLocally = useRef(false)
+  const [transferNotice, setTransferNotice] = useState('')
+  const fileInput = useRef(null)
+
+  // Traslado sin servidor: firmado con la clave guardada o, si no hay, con la que se acaba de escribir
+  const transferKey = () => getTotemKey() || keyInput
+
+  const saveTransfer = async () => {
+    try {
+      const file = downloadTransfer(await transferFile(ranking, transferKey()))
+      setTransferNotice(`Se guardó «${file}» en Descargas con ${ranking.length} partidas. En el totem: Exportar → IMPORTAR ARCHIVO.`)
+    } catch (error) {
+      setTransferNotice(error.message)
+    }
+  }
+
+  const importTransfer = async (event) => {
+    const file = event.target.files[0]
+    event.target.value = ''
+    if (!file) return
+    try {
+      const partidas = await readTransferFile(await file.text(), transferKey())
+      const added = onImport(partidas)
+      setSummary(
+        `${added === 1 ? 'Se agregó 1 partida' : `Se agregaron ${added} partidas`} al ranking` +
+          (partidas.length > added ? ` (${partidas.length - added} ya estaban).` : '.'),
+      )
+      setState('importado')
+    } catch (error) {
+      setTransferNotice(error.message)
+    }
+  }
 
   const upload = async () => {
     setState('subiendo')
@@ -43,7 +84,7 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
         // Sin internet o error del servidor: el ranking no se pierde, queda descargado en el totem
         if (!savedLocally.current) downloadCsv(rankingCsv(ranking))
         savedLocally.current = true
-        setMessage(error.kind === 'red' ? 'Sin conexión a internet.' : error.message)
+        setMessage(error.kind === 'red' ? 'Sin conexión con el servidor.' : error.message)
         setState('local')
       }
     }
@@ -55,7 +96,7 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
 
   // Paso 1: identificar el totem de la clave, sin enviar partidas
   const checkKey = async (event) => {
-    event.preventDefault()
+    event?.preventDefault()
     if (keyInput.replace(/[^a-z0-9]/gi, '').length !== 16) return setMessage('La clave tiene 16 caracteres.')
     setMessage('')
     setState('verificando')
@@ -65,7 +106,7 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
       setState('confirmar')
     } catch (error) {
       setMessage(error.kind === 'red' ? 'Sin conexión: no se pudo comprobar la clave.' : error.message)
-      setState('clave')
+      setState(error.kind === 'red' ? 'sinred' : 'clave')
     }
   }
 
@@ -83,6 +124,28 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
     setMessage('')
     setState('clave')
   }
+
+  const importLink = (
+    <button type="button" onClick={() => fileInput.current.click()} className="font-semibold text-brand-orange-deep underline">
+      Importar archivo de otro equipo
+    </button>
+  )
+
+  // Sin servidor: guardar las partidas de este equipo en un archivo, o importar el de otro equipo
+  const transferOptions = (
+    <div className="mt-[40px] flex w-full flex-col items-center border-t-2 border-ink-soft/15 pt-[40px]">
+      <p className="text-[32px] font-bold">¿La red no deja llegar al servidor?</p>
+      <p className="mt-[12px] text-[26px] leading-snug">
+        Pase las partidas con un archivo: guárdelo en este equipo y ábralo en el totem con IMPORTAR ARCHIVO.
+      </p>
+      <BrandButton variant="light" onClick={saveTransfer} className="mt-[32px] shadow-answer">
+        GUARDAR ARCHIVO
+      </BrandButton>
+      <BrandButton variant="light" onClick={() => fileInput.current.click()} className="mt-[24px] shadow-answer">
+        IMPORTAR ARCHIVO
+      </BrandButton>
+    </div>
+  )
 
   return (
     <div className="absolute inset-0 z-30 flex items-center justify-center bg-ink/60" role="dialog" aria-modal="true">
@@ -145,8 +208,35 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
             <BrandButton onClick={upload} className="mt-[40px]">
               VOLVER A INTENTAR
             </BrandButton>
+            {transferOptions}
           </>
         )}
+
+        {state === 'sinred' && (
+          <>
+            <Title>SIN CONEXIÓN AL SERVIDOR</Title>
+            <p className="mt-[32px] text-[28px] leading-snug">
+              No se pudo comprobar la clave. Pasa en redes de hoteles u oficinas que bloquean algunos sitios.
+            </p>
+            <BrandButton onClick={() => checkKey()} className="mt-[40px]">
+              VOLVER A INTENTAR
+            </BrandButton>
+            {transferOptions}
+          </>
+        )}
+
+        {state === 'importado' && (
+          <>
+            <Title>PARTIDAS IMPORTADAS</Title>
+            <p className="mt-[32px] text-[28px] font-semibold leading-snug">{summary}</p>
+            <p className="mt-[12px] text-[28px] leading-snug">Ya están en el ranking de este totem.</p>
+          </>
+        )}
+
+        {transferNotice && ['local', 'sinred', 'listo'].includes(state) && (
+          <p className="mt-[24px] text-[26px] font-semibold leading-snug text-brand-orange-deep">{transferNotice}</p>
+        )}
+        <input ref={fileInput} type="file" accept=".json,application/json" hidden onChange={importTransfer} />
 
         {!['subiendo', 'verificando', 'confirmar'].includes(state) && (
           <BrandButton variant="light" onClick={onClose} className="mt-[40px] shadow-answer">
@@ -163,6 +253,8 @@ export default function ExportDialog({ ranking, onExcluded, onClose }) {
             </button>
           </p>
         )}
+        {/* Con internet en el totem: importar el archivo de un equipo cuya red no llegaba al servidor */}
+        {state === 'listo' && <p className="mt-[16px] text-[24px] leading-snug">{importLink}</p>}
       </div>
     </div>
   )

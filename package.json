@@ -11,7 +11,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "paquete": "node scripts/package-kiosk.mjs",
-    "configurar-servidor": "node scripts/configurar-servidor.mjs"
+    "configurar-servidor": "node scripts/configurar-servidor.mjs",
+    "unir-rankings": "node scripts/unir-rankings.mjs"
   },
   "dependencies": {
     "@material-symbols/svg-200": "^0.47.5",
