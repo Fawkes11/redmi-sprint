@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
 import BrandButton from '../components/BrandButton.jsx'
 import Icon from '../components/Icon.jsx'
 import ScrollingText from '../components/ScrollingText.jsx'
@@ -36,10 +37,13 @@ const SCROLLBAR_SPACE = 26
 
 const formatScore = (score) => String(score).padStart(6, '0')
 
+// Jugador fuera de las filas visibles: tras este tiempo la tabla se abre y baja hasta su fila
+const FOCUS_DELAY_MS = 1_000
+
 // Modo administración: se cierra solo tras este tiempo sin tocar la pantalla
 const ADMIN_IDLE_MS = 2 * 60 * 1000
 
-function RankingRow({ entry, index, total, onDelete }) {
+function RankingRow({ entry, index, total, onDelete, focus }) {
   const dark = index % 2 === 0
   return (
     <li
@@ -47,7 +51,15 @@ function RankingRow({ entry, index, total, onDelete }) {
         dark ? 'bg-brand-orange-deep/30 text-paper-white' : 'text-brand-orange-deep'
       }`}
       style={{ height: ROW_HEIGHT }}
+      ref={focus?.row}
     >
+      {/* Fila del jugador: queda con el degradado de marca y destella al llegar (ver Ranking) */}
+      {focus && (
+        <>
+          <span ref={focus.bg} className="absolute inset-0 bg-brand-gradient opacity-0" />
+          <span ref={focus.flash} className="absolute inset-0 bg-paper-white opacity-0" />
+        </>
+      )}
       {/* Centros de columna tomados de Figma, relativos a la tabla */}
       <span className="absolute left-[77px] top-1/2 -translate-x-1/2 -translate-y-1/2 text-[36px]">{index + 1}</span>
       <span className="absolute left-[139px] top-1/2 h-[40px] w-[2px] -translate-y-1/2 bg-brand-orange" />
@@ -87,14 +99,33 @@ function RankingRow({ entry, index, total, onDelete }) {
 // Tabla "RANKING EN VIVO" (Figma: 687×575 en X 197, Y 1032; cabecera de 113 y filas de 66).
 // Expandida, las filas hacen scroll dentro del mismo alto; el contenedor de scroll se extiende
 // a los lados para no recortar medallas ni la insignia MASTER.
-function Ranking({ entries, total, expanded, top, visibleRows, onDelete }) {
+function Ranking({ entries, total, expanded, top, visibleRows, onDelete, focusIndex = -1 }) {
   const rows = expanded ? entries : entries.slice(0, visibleRows)
+  const scrollRef = useRef(null)
+  const focus = { row: useRef(null), bg: useRef(null), flash: useRef(null) }
+
+  // Al abrirse la tabla: scroll suave hasta la fila del jugador (centrada), que pasa al degradado de
+  // marca con texto blanco y destella tres veces
+  useLayoutEffect(() => {
+    if (!expanded || focusIndex < 0) return
+    const ctx = gsap.context(() => {
+      gsap
+        .timeline()
+        .to(scrollRef.current, { scrollTop: (focusIndex - (visibleRows - 1) / 2) * ROW_HEIGHT, duration: 1.2, ease: 'power2.inOut' })
+        .to(focus.bg.current, { opacity: 1, duration: 0.4 })
+        .to(focus.row.current, { color: '#ffffff', duration: 0.4 }, '<')
+        .fromTo(focus.flash.current, { opacity: 0 }, { opacity: 0.6, duration: 0.3, repeat: 5, yoyo: true, ease: 'sine.inOut' })
+    })
+    return () => ctx.revert()
+  }, [expanded, focusIndex])
+
   return (
     <div className="absolute left-[197px] w-[687px]" style={{ top }}>
       <div className="flex h-[113px] items-center justify-center rounded-t-[20px] bg-brand-gradient text-[32px] font-bold text-paper-white">
         RANKING EN VIVO
       </div>
       <div
+        ref={scrollRef}
         className={`scrollbar-brand overflow-x-hidden ${expanded ? 'overflow-y-auto' : 'overflow-y-hidden'}`}
         style={{
           height: ROW_HEIGHT * visibleRows,
@@ -105,7 +136,14 @@ function Ranking({ entries, total, expanded, top, visibleRows, onDelete }) {
       >
         <ol className="min-h-full w-[687px] rounded-b-[20px] bg-paper-white/70">
           {rows.map((entry, index) => (
-            <RankingRow key={entry.id} entry={entry} index={index} total={total} onDelete={onDelete} />
+            <RankingRow
+              key={entry.id}
+              entry={entry}
+              index={index}
+              total={total}
+              onDelete={onDelete}
+              focus={index === focusIndex ? focus : undefined}
+            />
           ))}
         </ol>
       </div>
@@ -127,11 +165,21 @@ export default function Resultados({ view = 'results', playerName, score, answer
   const rankingOnly = view === 'ranking'
   const layout = LAYOUTS[view]
   const canExpand = ranking.length > layout.rows
+  // Posición del jugador (los nombres son únicos en el ranking). Si quedó fuera de las filas visibles,
+  // la tabla se abre sola y lo lleva hasta su fila.
+  const playerIndex = rankingOnly ? -1 : ranking.findIndex((entry) => entry.name === playerName?.trim())
+  const focusIndex = playerIndex >= layout.rows ? playerIndex : -1
 
   // Confeti al entrar, solo si el jugador quedó en el top 3 (los nombres son únicos en el ranking)
   useEffect(() => {
     if (rankingOnly) return
-    return celebratePlace(ranking.findIndex((entry) => entry.name === playerName))
+    return celebratePlace(playerIndex)
+  }, [])
+
+  useEffect(() => {
+    if (focusIndex < 0) return
+    const timer = setTimeout(() => setExpanded(true), FOCUS_DELAY_MS)
+    return () => clearTimeout(timer)
   }, [])
 
   const exitAdmin = (notice = '') => {
@@ -225,6 +273,7 @@ export default function Resultados({ view = 'results', playerName, score, answer
         top={layout.top}
         visibleRows={layout.rows}
         onDelete={adminPin ? (entry) => setAdminDialog({ mode: 'eliminar', entry }) : undefined}
+        focusIndex={focusIndex}
       />
 
       {canExpand && (

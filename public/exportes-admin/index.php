@@ -27,6 +27,9 @@ $totems = [];
 foreach (redmi_totems() as $nombre) $totems[redmi_slug($nombre)] = $nombre;
 
 $marcado = isset($totems[$_GET['totem'] ?? '']) ? $_GET['totem'] : '';
+// Descarga directa (botón DESCARGAR EXCEL del totem en un PC): tras el PIN baja el Excel de ese totem
+$directo = $marcado !== '' && isset($_GET['directo']);
+$destino = $marcado ? '?totem=' . $marcado . ($directo ? '&directo=1' : '') : '';
 $autenticado = isset($_SESSION['desde']) && time() - $_SESSION['desde'] < SESION;
 $error = '';
 
@@ -42,7 +45,7 @@ if (!$autenticado && isset($_POST['pin'])) {
     if ($resultado === 'ok') {
         session_regenerate_id(true);
         $_SESSION['desde'] = time();
-        header('Location: ./' . ($marcado ? '?totem=' . $marcado : ''));
+        header('Location: ./' . $destino);
         exit;
     }
     $error = $resultado === 'bloqueado' ? 'Demasiados intentos. Espere unos minutos e intente de nuevo.' : 'PIN incorrecto.';
@@ -92,6 +95,7 @@ if ($autenticado) {
 }
 
 $e = fn ($texto) => htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
+$descargaDirecta = $directo ? current(array_filter($lista, fn ($t) => $t['slug'] === $marcado && $t['fecha'])) : false;
 ?>
 <!doctype html>
 <html lang="es">
@@ -100,6 +104,7 @@ $e = fn ($texto) => htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Rankings · Trivia REDMI</title>
+<?php if ($descargaDirecta): ?><meta http-equiv="refresh" content="0;url=./?descargar=<?= $e($marcado) ?>"><?php endif ?>
 <style>
   :root { --deep: #eb641c; --light: #f5a746; --ink: #444; --paper: #fafafa; }
   * { box-sizing: border-box; }
@@ -120,6 +125,7 @@ $e = fn ($texto) => htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
   .copia { display: inline-block; margin-top: 6px; font-size: 14px; color: var(--deep); }
   small { color: #888; }
   .salir { background: none; color: var(--ink); font-weight: 600; font-size: 15px; }
+  .aviso { background: #fff3e8; border-radius: 12px; padding: 12px; font-size: 15px; }
 </style>
 </head>
 <body>
@@ -127,7 +133,7 @@ $e = fn ($texto) => htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
 <?php if (!$autenticado): ?>
   <h1>Rankings de la trivia</h1>
   <p>Ingrese el PIN de 6 dígitos para descargar.</p>
-  <form method="post" action="./<?= $marcado ? '?totem=' . $e($marcado) : '' ?>">
+  <form method="post" action="./<?= $e($destino) ?>">
     <input name="pin" inputmode="numeric" pattern="\d{6}" maxlength="6" autocomplete="off" required autofocus aria-label="PIN">
     <button type="submit">ENTRAR</button>
     <?php if ($error): ?><p class="error"><?= $e($error) ?></p><?php endif ?>
@@ -135,6 +141,7 @@ $e = fn ($texto) => htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
 <?php else: ?>
   <h1>Rankings por totem</h1>
   <p><small>Cada archivo tiene todas las partidas del totem. Hora de Colombia.</small></p>
+  <?php if ($descargaDirecta): ?><p class="aviso">Descargando el Excel de <strong><?= $e($descargaDirecta['nombre']) ?></strong>. Si no empieza, toque «Descargar Excel».</p><?php endif ?>
   <ul>
     <?php foreach ($lista as $t): ?>
       <li class="<?= $t['slug'] === $marcado ? 'actual' : '' ?>">

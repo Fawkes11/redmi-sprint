@@ -27,6 +27,7 @@ export default function ExportDialog({ ranking, onExcluded, onImport, onClose })
   const [pending, setPending] = useState(null) // { key, totem } a confirmar
   const [message, setMessage] = useState('')
   const [qr, setQr] = useState(null)
+  const [downloadUrl, setDownloadUrl] = useState('')
   const [summary, setSummary] = useState('')
   // Respaldo local una sola vez, aunque se reintente varias veces
   const savedLocally = useRef(false)
@@ -74,6 +75,8 @@ export default function ExportDialog({ ranking, onExcluded, onImport, onClose })
           : `${totem}: ${nuevas} ${nuevas === 1 ? 'partida nueva' : 'partidas nuevas'} (${total} jugadores en total).`) +
           (omitidas ? ` ${omitidas} ${omitidas === 1 ? 'partida omitida' : 'partidas omitidas'} por datos incompletos.` : ''),
       )
+      // En un PC: la misma página de descarga, que tras el PIN baja directo el Excel de este totem
+      setDownloadUrl(`${url}&directo=1`)
       setQr(await QRCode.toDataURL(url, { width: 480, margin: 1, errorCorrectionLevel: 'M', color: { dark: '#444444', light: '#FFFFFF' } }))
       setState('listo')
     } catch (error) {
@@ -194,7 +197,17 @@ export default function ExportDialog({ ranking, onExcluded, onImport, onClose })
             <Title>RANKING EXPORTADO</Title>
             <img draggable={false} src={qr} alt="Código QR para descargar el ranking" className="mt-[40px] size-[480px] rounded-[20px]" />
             <p className="mt-[32px] text-[28px] font-semibold leading-snug">{summary}</p>
-            <p className="mt-[12px] text-[28px] leading-snug">Escanee el código para descargarlo. Se pedirá el PIN.</p>
+            <p className="mt-[12px] text-[28px] leading-snug">
+              Escanee el código con el celular o descárguelo en este equipo. Se pedirá el PIN.
+            </p>
+            <a
+              href={downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-[40px] flex h-[123px] w-[510px] items-center justify-center rounded-[20px] bg-brand-gradient text-[48px] font-bold leading-none text-paper-white active:brightness-95"
+            >
+              DESCARGAR EXCEL
+            </a>
           </>
         )}
 
